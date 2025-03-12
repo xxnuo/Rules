@@ -178,10 +178,10 @@ dns:
     - 119.29.29.29
   proxy-server-nameserver:
     - quic://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query 
+    - https://sm2.doh.pub/dns-query 
   nameserver:
     - quic://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
+    - https://sm2.doh.pub/dns-query
   fallback:
     - https://cloudflare-dns.com/dns-query
     - https://dns.google/dns-query
