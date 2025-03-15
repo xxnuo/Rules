@@ -107,6 +107,39 @@ https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_S
 ```
 - 2 新建一个脚本以替换订阅及名称所需代码与基础篇一致包括自定义过滤部分
 
+-  若仅有一个订阅链接那么只需要使用最简单的yaml覆写即可代码如下
+
+```yaml
+proxy-providers!:
+  Airprot01:
+    type: http
+    interval: 86400
+    health-check:
+      enable: true
+      url: 'http://captive.apple.com/'
+      interval: 300
+    proxy: "\U0001F7E2 直连"
+    url: >-
+      订阅链接替换
+    override:
+      additional-prefix: '[机场名称]'
+      skip-cert-verify: true
+      udp: true
+  Linkcube:
+    type: http
+    interval: 86400
+    health-check:
+      enable: true
+      url: 'http://captive.apple.com/'
+      interval: 300
+    proxy: "\U0001F7E2 直连"
+    url: >-
+      订阅链接替换
+    override:
+      additional-prefix: '[机场名称]'
+      skip-cert-verify: true
+      udp: true
+
 #### 添加自定义国家分组/策略组，以韩国为例，新建脚本输入以下内容
 ```
 function main(config) {
