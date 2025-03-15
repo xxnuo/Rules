@@ -109,6 +109,8 @@ https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_S
 
 -  若仅有一个订阅链接那么只需要使用最简单的yaml覆写即可代码如下
 
+additional-prefix: '[机场名称]'为可选项无需可删除
+
 ```yaml
 proxy-providers!:
   Airprot01:
@@ -125,7 +127,7 @@ proxy-providers!:
       additional-prefix: '[机场名称]'
       skip-cert-verify: true
       udp: true
-  Linkcube:
+  Airprot02:
     type: http
     interval: 86400
     health-check:
