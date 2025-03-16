@@ -68,6 +68,9 @@ FlClash
 Stash
 (https://apps.apple.com/app/stash/id1596063349?platform=iphone&l=zh-CN)
 
+Pharos-Pro
+(https://apps.apple.com/us/app/pharos-pro/id1456610173)
+
 •鸿蒙
 ClashNEXT
 (https://github.com/xiaobaigroup/hapapp)
