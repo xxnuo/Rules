@@ -77,16 +77,16 @@ sniffer:
   skip-domain:
     - "Mijia Cloud"
     - "dlg.io.mi.com"
-    - "+.push.apple.com"
-    - "+.apple.com"
-    - '+.wechat.com'
-    - '+.qpic.cn'
-    - '+.qq.com'
-    - '+.wechatapp.com'
-    - '+.vivox.com'
+    - "*.push.apple.com"
+    - "*.apple.com"
+    - "*.wechat.com"
+    - "*.qpic.cn"
+    - "*.qq.com"
+    - "*.wechatapp.com"
+    - "*.vivox.com"
     # 向日葵服务
-    - '+.oray.com'
-    - '+.sunlogin.net'
+    - "*.oray.com"
+    - "*.sunlogin.net"
     
 # 代理模式
 tun:
