@@ -36,18 +36,18 @@
 
 ### 标准版
 
-除Stash外使用➡️
+Mihomo使用➡️
 [configfull.yaml](https://github.com/Lanlan13-14/Rules/blob/main/configfull.yaml)
 
-Stash专用➡️
+Stash使用➡️
 [configfull_Stash.yaml](https://github.com/Lanlan13-14/Rules/blob/main/configfull_Stash.yaml)
 
 ### 无去广告版
 
-除Stash外使用➡️
+Mihomo使用➡️
 [configfull_NoAd.yaml](https://github.com/Lanlan13-14/Rules/blob/main/configfull_NoAd.yaml)
 
-Stash专用➡️
+Stash使用➡️
 [configfull_NoAd_stash.yaml](https://github.com/Lanlan13-14/Rules/blob/main/configfull_NoAd_Stash.yaml)
 
 
