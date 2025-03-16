@@ -89,7 +89,7 @@ Openclash
 
 [Ad Blocker Test](https://adblock.turtlecute.org/)
 
-## 鸣谢,以下排名不分先后
+## 🌟鸣谢,以下排名不分先后
 
 •[vernesong/OpenClash](https://github.com/vernesong/OpenClash)
 
