@@ -1,9 +1,9 @@
-DOMAIN-KEYWORD,core-c-lq,IP
-DOMAIN-KEYWORD,core-lq,IP
-DOMAIN-KEYWORD,normal-c-lq,IP
-DOMAIN-KEYWORD,normal-lq,IP
-DOMAIN-KEYWORD,search-quic-lq,IP
-DOMAIN-KEYWORD,search-lq,IP
+DOMAIN-KEYWORD,core-c-lq
+DOMAIN-KEYWORD,core-lq
+DOMAIN-KEYWORD,normal-c-lq
+DOMAIN-KEYWORD,normal-lq
+DOMAIN-KEYWORD,search-quic-lq
+DOMAIN-KEYWORD,search-lq
 DOMAIN,lf3-static.bytednsdoc.com
 DOMAIN,v5-dy-o-abtest.zjcdn.com
 DOMAIN-SUFFIX,amemv.com
