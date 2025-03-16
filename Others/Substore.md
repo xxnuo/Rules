@@ -144,7 +144,7 @@ proxy-providers!:
 ```
 ##### 如果你想直接在配置文件里面同一机场节点名称写法如下
 ```
-   Airport_01: { <<: *For_Providers, proxy: "🟢 直连", url: "订阅链接1", override: { additional-prefix: "[机场名称1] ", skip-cert-verify: true, udp: true } }, proxy-name: [ { pattern: "替换内容1", "target": "目标替换内容1" }, { pattern: "替换内容2", target: "目标替换内容2" } ] }
+   Airport_01: { <<: *For_Providers, proxy: "🟢 直连", url: "订阅链接1", override: { additional-prefix: "[机场名称1] ", skip-cert-verify: true, udp: true } }, proxy-name: [ { pattern: "替换内容1", target: "目标替换内容1" }, { pattern: "替换内容2", target: "目标替换内容2" } ] }
 ```
 
 #### 添加自定义国家分组/策略组，以韩国为例，新建脚本输入以下内容
