@@ -47,7 +47,7 @@ Stash使用➡️
 Mihomo使用➡️
 [configfull_NoAd.yaml](https://github.com/Lanlan13-14/Rules/blob/main/configfull_NoAd.yaml)
 
-Stash使用➡️
+Stash使用（AppleTV建议使用）➡️
 [configfull_NoAd_stash.yaml](https://github.com/Lanlan13-14/Rules/blob/main/configfull_NoAd_Stash.yaml)
 
 
