@@ -281,7 +281,28 @@ function main(config) {
 在 rules 中插入新的规则 "RULE-SET,localip192.168.31.0,Back_store,no-resolve"
 其余以此类推，规则写法部分参考[mihomo官方文档](https://wiki.metacubex.one)
 
-
+##### 添加链式代理内容
+1.添加链式代理策略组
+```
+  - {name: Chain-Proxy,type: select, <<: *Include_all, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/chain.png"}
+```
+代码如下
+##### Comming soon
+2.自建节点添加，此处使用yaml覆写
+dialer-proxy: Chain-Proxy
+即可如下所示
+```
+    name: "🏠 home",
+    type: "ss",
+    dialer-proxy: Chain-Proxy
+    server: "写入你的域名或ip",
+    port: 这里写入端口,
+    cipher: "这里写入你的加密方式",
+    password: "这里写入密码",
+    tfo: false
+```
+3.修改全局策略组使用如下代码
+##### Comming soon
 #### 最后预览符合预期后保存复制链接即可，如果想要在外面也能更新那么只需要一个反代+域名+ssl证书即可实现，反代地址填入刚刚复制的链接即可
 
 ### 若能力有限建议使用[ChatGPT](https://chatgpt.com)复制代码让他按照你的要求修改
