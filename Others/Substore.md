@@ -292,14 +292,29 @@ function main(config) {
 dialer-proxy: Chain-Proxy
 即可如下所示
 ```
-    name: "🏠 home",
+function main(config) {
+  // 确保 `proxies` 存在
+  if (!config["proxies"]) {
+    config["proxies"] = [];
+  }
+
+  // 定义自建节点
+  const homeNode = {
+    name: "洛杉矶-自建",
     type: "ss",
-    dialer-proxy: Chain-Proxy
+    dialer-proxy: Chain-Proxy,
     server: "写入你的域名或ip",
     port: 这里写入端口,
     cipher: "这里写入你的加密方式",
     password: "这里写入密码",
     tfo: false
+  };
+
+  // 直接添加到 `proxies`
+  config["proxies"].push(homeNode);
+
+  return config;
+}
 ```
 3.修改全局策略组使用如下代码
 ##### Comming soon
