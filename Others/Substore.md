@@ -338,7 +338,7 @@ function main(config) {
 }
 ```
 
-2.自建节点添加，此处使用yaml覆写
+2.自建节点添加
 dialer-proxy: Chain-Proxy
 即可如下所示
 ```
