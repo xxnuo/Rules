@@ -182,14 +182,14 @@ function main(config) {
 - 1 所添加的不在proxy-group内
 ```
 function main(config) {
-  // 确保 `pr` 这个对象存在
-  if (config["pr"] && Array.isArray(config["pr"].proxies)) {
+  // 确保 `Proxy_first` 这个对象存在
+  if (config["Proxy_first"] && Array.isArray(config["Proxy_first"].proxies)) {
     // 找到 "欧洲节点" 在 proxies 里的位置
-    const euIndex = config["pr"].proxies.indexOf("欧洲节点");
+    const euIndex = config["Proxy_first"].proxies.indexOf("欧洲节点");
 
     // 如果找到了 "欧洲节点"，就在它后面插入 "韩国节点"
     if (euIndex !== -1) {
-      config["pr"].proxies.splice(euIndex + 1, 0, "韩国节点");
+      config["Proxy_first"].proxies.splice(euIndex + 1, 0, "韩国节点");
     }
   }
 
@@ -287,7 +287,57 @@ function main(config) {
   - {name: Chain-Proxy,type: select, <<: *Include_all, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/chain.png"}
 ```
 代码如下
-##### Comming soon
+```
+function main(config) {
+  // 确保 `proxy-groups` 存在
+  if (!config["proxy-groups"]) {
+    config["proxy-groups"] = [];
+  }
+
+  // 找到 "Final" 的位置
+  const euIndex = config["proxy-groups"].findIndex(group => group.name === "Final");
+
+  // 定义 "链式代理" 策略组
+  const ChainProxy = {
+    name: "Chain-Proxy",
+    type: "select",
+    "include-all": true,
+    tolerance: 20,
+    interval: 300,
+    proxies: [
+      "节点选择",
+      "香港自动",
+      "新加坡自动",
+      "日本自动",
+      "台湾自动",
+      "美国自动",
+      "自动选择",
+      "香港节点",
+      "新加坡节点",
+      "日本节点",
+      "台湾节点",
+      "美国节点",
+      "欧洲节点",
+      "全部节点",
+      "自建/家宽节点",
+      "全球直连"
+    ],
+    "exclude-filter": "(?i)(直连|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|traffic)",
+    icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/chain.png"
+  };
+
+  // 插入到 "Final" 之后
+  if (euIndex !== -1) {
+    config["proxy-groups"].splice(euIndex + 1, 0, ChainProxy);
+  } else {
+    // 如果找不到 "Final"，则添加到末尾
+    config["proxy-groups"].push(ChainProxy);
+  }
+
+  return config;
+}
+```
+
 2.自建节点添加，此处使用yaml覆写
 dialer-proxy: Chain-Proxy
 即可如下所示
@@ -317,7 +367,44 @@ function main(config) {
 }
 ```
 3.修改全局策略组使用如下代码
-##### Comming soon
+```
+function main(config) {
+  // 确保 `proxy-groups` 存在
+  if (!config["proxy-groups"]) {
+    config["proxy-groups"] = [];
+  }
+
+  // 定义 "GLOBAL" 策略组
+  const globalGroup = {
+    name: "GLOBAL",
+    type: "select",
+    "include-all": true,
+    proxies: [
+      "节点选择", "YouTube", "GoogleVPN", "FCM", "Google", "Meta", "AI", "GitHub", "OneDrive",
+      "Microsoft", "Telegram", "Discord", "Talkatone", "LINE", "Signal", "TikTok", "NETFLIX",
+      "DisneyPlus", "HBO", "Primevideo", "AppleTV", "Apple", "Emby", "哔哩哔哩", "哔哩东南亚",
+      "巴哈姆特", "Spotify", "国内媒体", "Global-TV", "Global-Medial", "游戏平台", "Speedtest",
+      "PayPal", "Wise", "国外电商", "STEAM", "全球直连", "隐私拦截", "Final", "Chain-Proxy", "自建/家宽节点", "香港节点", "新加坡节点", "日本节点", "台湾节点", "美国节点", "欧洲节点", "香港自动",
+      "新加坡自动", "日本自动", "台湾自动", "美国自动", "自动选择", "全部节点"
+    ],
+    "exclude-filter": "(?i)(?i)(🟢 直连|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author)",
+    icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/global.png"
+  };
+
+  // 查找是否存在名为 "GLOBAL" 的策略组
+  const existingIndex = config["proxy-groups"].findIndex(group => group.name === "GLOBAL");
+
+  if (existingIndex !== -1) {
+    // 如果存在，则覆写
+    config["proxy-groups"][existingIndex] = globalGroup;
+  } else {
+    // 如果不存在，则添加新的策略组
+    config["proxy-groups"].push(globalGroup);
+  }
+
+  return config;
+}
+```
 #### 最后预览符合预期后保存复制链接即可，如果想要在外面也能更新那么只需要一个反代+域名+ssl证书即可实现，反代地址填入刚刚复制的链接即可
 
 ### 若能力有限建议使用[ChatGPT](https://chatgpt.com)复制代码让他按照你的要求修改
