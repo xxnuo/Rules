@@ -118,7 +118,7 @@ proxy-providers!:
     interval: 86400
     health-check:
       enable: true
-      url: 'http://captive.apple.com/'
+      url: 'http://www.google-analytics.com/generate_204'
       interval: 300
     proxy: "\U0001F7E2 直连"
     url: >-
@@ -132,7 +132,7 @@ proxy-providers!:
     interval: 86400
     health-check:
       enable: true
-      url: 'http://captive.apple.com/'
+      url: 'http://www.google-analytics.com/generate_204'
       interval: 300
     proxy: "\U0001F7E2 直连"
     url: >-
