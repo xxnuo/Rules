@@ -4,4 +4,6 @@ DOMAIN,cavps.eu.org
 DOMAIN,emby.aikan.la
 DOMAIN,emby.aikan.cloud
 DOMAIN,random.ouonet.org
+DOMAIN,aikan.la
+DOMAIN,aikan.cloud
 DOMAIN-REGEX,(?i)emby|tsukimi
