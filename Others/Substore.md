@@ -338,33 +338,28 @@ function main(config) {
 }
 ```
 
-2.自建节点添加
+2.自建节点添加此处使用yaml覆写节点名称带有Private表示即可自动被自建节点策略组收录
 dialer-proxy: Chain-Proxy
 即可如下所示
-```
-function main(config) {
-  // 确保 `proxies` 存在
-  if (!config["proxies"]) {
-    config["proxies"] = [];
-  }
-
-  // 定义自建节点
-  const homeNode = {
-    name: "洛杉矶-自建",
-    type: "ss",
-    dialer-proxy: Chain-Proxy,
-    server: "写入你的域名或ip",
-    port: 这里写入端口,
-    cipher: "这里写入你的加密方式",
-    password: "这里写入密码",
-    tfo: false
-  };
-
-  // 直接添加到 `proxies`
-  config["proxies"].push(homeNode);
-
-  return config;
-}
+```yaml
+proxies+:
+ - name: "🇺🇸 Los Angeles Private"
+   type: vless
+   dialer-proxy: Chain-Proxy
+   server: 
+   port: 443
+   uuid: 
+   network: tcp
+   tls: true
+   udp: false
+   flow: xtls-rprx-vision
+   servername: 
+   reality-opts:
+     public-key: 
+     short-id: ""
+   client-fingerprint: chrome
+   skip-cert-verify: false
+   tfo: false
 ```
 3.修改全局策略组使用如下代码
 ```
