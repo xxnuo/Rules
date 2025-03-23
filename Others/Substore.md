@@ -1,5 +1,9 @@
 # 以下为Substore部署教程
 ## 基础版
+<h2 id="b">基础版</h2>
+<details>
+<summary>展开</summary>
+<ul>
 - 前提条件：
 一个可以使用的docker，至少120mb的docker空间
 或者代理软件内置Substore支持也可以使用
@@ -79,6 +83,8 @@ $content = $content.replace(/The_house/g, 'hgc');
 ![Substore 部署示例1](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/Others/Substore01.jpg)
 ![Substore 部署示例2](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/Others/Substore02.jpg)
 ![Substore 部署示例3](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/Others/Substore03.jpg)
+</ul>
+</details>
 
 ## 高级篇
 #### 部署同上，请确保Substore版本已为最新版
