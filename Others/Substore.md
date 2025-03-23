@@ -1,5 +1,5 @@
 # 以下为Substore部署教程
-## 基础版
+
 <h2 id="b">基础版</h2>
 <details>
 <summary>展开</summary>
@@ -86,7 +86,10 @@ $content = $content.replace(/The_house/g, 'hgc');
 </ul>
 </details>
 
-## 高级篇
+<h2 id="b">高级篇</h2>
+<details>
+<summary>展开</summary>
+
 #### 部署同上，请确保Substore版本已为最新版
 使用教程如下
 - 1 新建文件选择mihomo覆写如图
@@ -407,5 +410,7 @@ function main(config) {
 }
 ```
 #### 最后预览符合预期后保存复制链接即可，如果想要在外面也能更新那么只需要一个反代+域名+ssl证书即可实现，反代地址填入刚刚复制的链接即可
+</ul>
+</details>
 
 ### 若能力有限建议使用[ChatGPT](https://chatgpt.com)复制代码让他按照你的要求修改
