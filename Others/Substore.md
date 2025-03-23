@@ -3,7 +3,7 @@
 <h2 id="b">基础版</h2>
 <details>
 <summary>展开</summary>
-<ul>
+
 - 前提条件：
 一个可以使用的docker，至少120mb的docker空间
 或者代理软件内置Substore支持也可以使用
