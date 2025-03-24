@@ -58,6 +58,10 @@ jobs:
         # 删除源文件，保留 banAd.yaml 和 banAd.mrs
         rm -f rules/Domain/qx.list rules/Domain/category-ads-all.list rules/Domain/banAd-domain.list
 
+    - name: Pull remote changes before pushing
+      run: |
+        git pull origin main --rebase
+
     - name: Commit and Push Changes
       run: |
         git add .
