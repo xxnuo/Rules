@@ -1,68 +1,64 @@
-name: Sync and Compile BanAd Rules
-
-on:
-  schedule:
-    - cron: '0 18 * * *'  # 北京时间 02:00 执行
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
-jobs:
-  banad_rules:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Set up Git user
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-
-    - name: Install mihomo
-      run: |
-        version=$(curl -sL https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt)
-        curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
-          gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
-
-    - name: Fetch BanAd Rules
-      run: |
-        mkdir -p rules/Domain  # 确保目录存在
-
-        # 下载 BanAd 规则文件
-        curl -sL "https://raw.githubusercontent.com/8680/GOODBYEADS/master/data/rules/qx.list" -o rules/Domain/qx.list
-        curl -sL "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ads-all.list" -o rules/Domain/category-ads-all.list
-
-    - name: Extract DOMAIN rules from qx.list
-      run: |
-        # 提取 qx.list 中的 DOMAIN 规则
-        grep -Eo 'DOMAIN,[^,]+' rules/Domain/qx.list | sed 's/DOMAIN,//' > rules/Domain/banAd-domain.list
-        grep -Eo 'DOMAIN-SUFFIX,[^,]+' rules/Domain/qx.list | sed 's/DOMAIN-SUFFIX,//' >> rules/Domain/banAd-domain.list
-
-    - name: Convert BanAd Rules to YAML
-      run: |
-        echo "payload:" > rules/Domain/banAd.yaml
-        sort -u rules/Domain/banAd-domain.list | awk '{print "  - \047" $0 "\047"}' >> rules/Domain/banAd.yaml
-
-    - name: Convert BanAd Rules to MRS
-      run: |
-        # 使用 mihomo 转换为 MRS 格式
-        mihomo convert-ruleset domain yaml rules/Domain/banAd.yaml rules/Domain/banAd.mrs
-
-    - name: Clean up the source files
-      run: |
-        # 删除源文件，保留 banAd.yaml 和 banAd.mrs
-        rm -f rules/Domain/qx.list rules/Domain/category-ads-all.list rules/Domain/banAd-domain.list
-
-    - name: Pull remote changes before pushing
-      run: |
-        git pull origin main --rebase
-
-    - name: Commit and Push Changes
-      run: |
-        git add .
+name: Sync and Compile BanAd Rules  
+  
+on:  
+  schedule:  
+    - cron: '0 18 * * *'  # 北京时间 02:00 执行  
+  workflow_dispatch:  
+  
+permissions:  
+  contents: write  
+  
+jobs:  
+  banad_rules:  
+    runs-on: ubuntu-latest  
+  
+    steps:  
+    - name: Checkout the repository  
+      uses: actions/checkout@v4  
+      with:  
+        token: ${{ secrets.GITHUB_TOKEN }}  
+  
+    - name: Set up Git user  
+      run: |  
+        git config user.name "github-actions[bot]"  
+        git config user.email "github-actions[bot]@users.noreply.github.com"  
+  
+    - name: Install mihomo  
+      run: |  
+        version=$(curl -sL https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt)  
+        curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \  
+          gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo  
+  
+    - name: Fetch BanAd Rules  
+      run: |  
+        mkdir -p rules/Domain  # 确保目录存在  
+  
+        # 下载 BanAd 规则文件  
+        curl -sL "https://raw.githubusercontent.com/8680/GOODBYEADS/master/data/rules/qx.list" -o rules/Domain/qx.list  
+        curl -sL "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ads-all.list" -o rules/Domain/category-ads-all.list  
+  
+    - name: Extract DOMAIN rules from qx.list  
+      run: |  
+        # 提取 qx.list 中的 DOMAIN 规则  
+        grep -Eo 'DOMAIN,[^,]+' rules/Domain/qx.list | sed 's/DOMAIN,//' > rules/Domain/banAd-domain.list  
+        grep -Eo 'DOMAIN-SUFFIX,[^,]+' rules/Domain/qx.list | sed 's/DOMAIN-SUFFIX,//' >> rules/Domain/banAd-domain.list  
+  
+    - name: Convert BanAd Rules to YAML  
+      run: |  
+        echo "payload:" > rules/Domain/banAd.yaml  
+        sort -u rules/Domain/banAd-domain.list | awk '{print "  - \047" $0 "\047"}' >> rules/Domain/banAd.yaml  
+  
+    - name: Convert BanAd Rules to MRS  
+      run: |  
+        # 使用 mihomo 转换为 MRS 格式  
+        mihomo convert-ruleset domain yaml rules/Domain/banAd.yaml rules/Domain/banAd.mrs  
+  
+    - name: Clean up the source files  
+      run: |  
+        # 删除源文件，保留 banAd.yaml 和 banAd.mrs  
+        rm -f rules/Domain/qx.list rules/Domain/category-ads-all.list rules/Domain/banAd-domain.list  
+  
+    - name: Commit and Push Changes  
+      run: |  
+        git add .  
         git diff-index --quiet HEAD -- || (git commit -m "Updated BanAd rules (qx.list -> banAd.mrs)" && git push)
