@@ -57,8 +57,8 @@ Stash使用（AppleTV建议使用）➡️
 Clash-verge-rev（若出现DNS泄漏请打开严格路由）
 (https://github.com/clash-verge-rev/clash-verge-rev)
 
-Mihomo-Party（若出现DNS泄漏请打开严格路由）
-(https://github.com/xishang0128/mihomo-party)
+Clash-meta-Party（若出现DNS泄漏请打开严格路由）
+(https://github.com/xishang0128/clash-meta-party)
 
 •Android 
 FlClash
