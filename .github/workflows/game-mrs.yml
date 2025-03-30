@@ -1,4 +1,4 @@
-name: Sync and Convert All Game Rules to MRS
+name: Sync and Convert Game Rules to MRS
 
 on:
   schedule:
@@ -29,27 +29,36 @@ jobs:
         curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
           gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
 
-    - name: Fetch All Game YAML Rules from repository
+    - name: Create action2 folder
       run: |
-        # 确保目标目录存在
-        mkdir -p rules/Game
+        mkdir -p rules/Game/action2
 
-        # 下载 rules/Game 目录下所有 .yaml 文件
-        curl -sL "https://github.com/Lanlan13-14/Rules/raw/main/rules/Game/*.yaml" -o rules/Game/game-rules.yaml
-
-    - name: Convert Each Game Rule YAML to MRS
+    - name: Fetch Game Rules from repository
       run: |
-        # 遍历 rules/Game 目录下所有的 YAML 文件并转换为 MRS 格式
-        for file in rules/Game/*.yaml; do
+        # 拉取 rules/Game 中的所有 YAML 文件并存放到 action2 文件夹中
+        curl -sL "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Game/*.yaml" -o rules/Game/action2/game-rules.yaml
+
+    - name: Process YAML Files and Convert to MRS
+      run: |
+        # 遍历 action2 目录下的所有 YAML 文件并处理
+        for file in rules/Game/action2/*.yaml; do
           filename=$(basename -- "$file")
           name="${filename%.yaml}"
           output="rules/Game/${name}.mrs"
+          
+          # 读取 YAML 文件内容，删除 IP 地址前后的空格
+          sed -i 's/\s*[0-9\.\/]*\s*/\1/g' "$file"
           
           # 使用 mihomo 转换每个 YAML 文件为 MRS 格式
           mihomo convert-ruleset ipcidr yaml "$file" "$output"
         done
 
+    - name: Clean up action2 folder
+      run: |
+        # 删除 action2 文件夹中的所有文件
+        rm -rf rules/Game/action2/*
+
     - name: Commit and Push Changes
       run: |
         git add .
-        git diff-index --quiet HEAD -- || (git commit -m "Converted all game rules to MRS format" && git push)
+        git diff-index --quiet HEAD -- || (git commit -m "Converted game rules to MRS format" && git push)
