@@ -1,5 +1,4 @@
 payload:
-  - \x27#Proxy Telegram only,仅代理Telegram,0,0,1,0,1,0,By-CN_SZTL Add-tianyu\x27
   - \x2791.108.8.0/22\x27
   - \x2791.108.56.0/22\x27
   - \x2791.108.4.0/22\x27
