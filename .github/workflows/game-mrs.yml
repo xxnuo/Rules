@@ -22,10 +22,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Install jq and mihomo
+      - name: Install dependencies and mihomo
         run: |
           sudo apt-get update
-          sudo apt-get install -y jq
+          sudo apt-get install -y jq perl
           # 下载并安装 mihomo
           version=$(curl -sL https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt)
           curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | gunzip -c > mihomo
@@ -39,7 +39,7 @@ jobs:
       - name: Download YAML files via GitHub API
         run: |
           cd rules/Game/action2
-          # 使用 GitHub API 获取 rules/Game 目录下所有文件的 download_url，并过滤出 .yaml 文件
+          # 使用 GitHub API 获取 rules/Game 目录下所有 YAML 文件的下载链接
           files=$(curl -s "https://api.github.com/repos/Lanlan13-14/Rules/contents/rules/Game?ref=main" | jq -r '.[].download_url' | grep '\.yaml$')
           for url in $files; do
             echo "Downloading $url"
@@ -49,14 +49,15 @@ jobs:
 
       - name: Process and convert each YAML file
         run: |
-          # 遍历 action2 目录下的所有 YAML 文件
+          # 对每个 YAML 文件，先使用 Perl 清除单引号内前后多余空格，再调用 mihomo 转换
           for file in rules/Game/action2/*.yaml; do
             echo "Processing file: $file"
-            # 去除行首 - ' 后面多余的空白
-            sed -i "s/^[[:space:]]*-[[:space:]]*'[[:space:]]*/\1/" "$file"
-            # 去除行尾空白（即关闭单引号前的空白），仅针对以单引号结尾的行
-            sed -i "s/[^[:space:]][[:space:]]*'\$/\1'/g" "$file"
-            # 生成输出文件名（与 YAML 文件同名，后缀 .mrs），输出到 rules/Game 目录下
+            # Perl 命令解释：
+            # -i             表示原地修改文件
+            # -pe           表示逐行处理，并输出结果
+            # 正则表达式：s/'\s*([^']*?)\s*'/'$1'/g
+            #   将单引号内的内容两侧多余空格去掉，保留内容
+            perl -i -pe "s/'\s*([^']*?)\s*'/'\$1'/g" "$file"
             base=$(basename "$file" .yaml)
             output="rules/Game/${base}.mrs"
             echo "Converting $file to $output"
