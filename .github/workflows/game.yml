@@ -36,6 +36,11 @@ jobs:
         cd ..
         rm -rf tmp_repo
 
+    - name: Remove Private CIDR Addresses
+      run: |
+        # 使用 sed 删除私有地址的 CIDR
+        sed -i '/(^10|^172\.(1[6-9]|2[0-9]|3[01])|^192.168|^169.254|^22[4-9]|^2[3-5][0-9]).*/d' rules/Game/action/*.rules
+
     - name: Convert Rules to YAML
       run: |
         mkdir -p rules/Game
@@ -46,14 +51,11 @@ jobs:
 
           echo "payload:" > "$output"
           
-          # 读取规则并检查是否为有效的CIDR
+          # 读取规则并生成YAML
           while IFS= read -r line; do
-            if [[ -n "$line" ]] && ! echo "$line" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/[0-9]+$'; then
-              # 如果不是有效的CIDR，忽略该行
-              continue
+            if [[ -n "$line" ]]; then
+              echo "  - \x27$line\x27" >> "$output"
             fi
-            # 如果是有效的CIDR，写入yaml
-            echo "  - \x27$line\x27" >> "$output"
           done < "$file"
         done
 
