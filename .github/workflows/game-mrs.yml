@@ -1,15 +1,15 @@
-name: Convert Game YAML to MRS
+name: Sync and Convert Game Rules to MRS
 
 on:
   schedule:
-    - cron: '0 1 * * 1'  # 每周一 UTC 时间凌晨1:00 执行，相当于北京时间 9:00
+    - cron: '0 1 * * 1'  # 每周一 01:00 UTC（北京时间 09:00）执行
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  convert_yaml_to_mrs:
+  game_rules_to_mrs:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,14 +29,19 @@ jobs:
         curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
           gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
 
-    - name: Convert YAML to MRS
+    - name: Convert all Game Rules YAML to MRS
       run: |
+        # 遍历所有 YAML 文件并转换为 MRS 格式
         for file in rules/Game/*.yaml; do
-          mrs_file="${file%.yaml}.mrs"
-          mihomo convert-ruleset domain yaml "$file" "$mrs_file"
+          filename=$(basename -- "$file")
+          name="${filename%.yaml}"
+          output="rules/Game/${name}.mrs"
+
+          # 转换 YAML 为 MRS
+          mihomo convert-ruleset ipcidr yaml "$file" "$output"
         done
 
     - name: Commit and Push Changes
       run: |
         git add .
-        git diff-index --quiet HEAD -- || (git commit -m "Converted YAML to MRS" && git push)
+        git diff-index --quiet HEAD -- || (git commit -m "Converted game rules to MRS format" && git push)
