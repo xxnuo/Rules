@@ -30,6 +30,7 @@ jobs:
         curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" -o mihomo.gz
         gunzip mihomo.gz
         chmod +x mihomo
+        mv mihomo /usr/local/bin/
 
     - name: Fetch Game Rules from repository
       run: |
@@ -52,7 +53,7 @@ jobs:
           sed '/^#/d; /^$/d;' "$file" > temp_file && mv temp_file "$file"
 
           # 使用 mihomo 将 YAML 文件转换为 MRS 格式
-          mihomo convert-ruleset ipcidr yaml "$file" "${file%.yaml}.mrs"
+          /usr/local/bin/mihomo convert-ruleset ipcidr yaml "$file" "${file%.yaml}.mrs"
         done
 
     - name: Commit and Push Changes
