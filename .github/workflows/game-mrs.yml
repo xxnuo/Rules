@@ -1,4 +1,4 @@
-name: Convert Game Rule to MRS
+name: Sync and Convert All Game Rules to MRS
 
 on:
   schedule:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  game_rule_to_mrs:
+  game_rules_to_mrs:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,20 +29,27 @@ jobs:
         curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
           gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
 
-    - name: Fetch Game Rule (300hero-cn.yaml)
+    - name: Fetch All Game YAML Rules from repository
       run: |
         # 确保目标目录存在
         mkdir -p rules/Game
 
-        # 获取指定的 300hero-cn.yaml 文件
-        curl -sL "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Game/300hero-cn.yaml" -o rules/Game/300hero-cn.yaml
+        # 下载 rules/Game 目录下所有 .yaml 文件
+        curl -sL "https://github.com/Lanlan13-14/Rules/raw/main/rules/Game/*.yaml" -o rules/Game/game-rules.yaml
 
-    - name: Convert Game Rule YAML to MRS
+    - name: Convert Each Game Rule YAML to MRS
       run: |
-        # 使用 mihomo 将 300hero-cn.yaml 转换为 MRS 格式
-        /usr/local/bin/mihomo convert-ruleset ipcidr yaml rules/Game/300hero-cn.yaml rules/Game/300hero-cn.mrs
+        # 遍历 rules/Game 目录下所有的 YAML 文件并转换为 MRS 格式
+        for file in rules/Game/*.yaml; do
+          filename=$(basename -- "$file")
+          name="${filename%.yaml}"
+          output="rules/Game/${name}.mrs"
+          
+          # 使用 mihomo 转换每个 YAML 文件为 MRS 格式
+          mihomo convert-ruleset ipcidr yaml "$file" "$output"
+        done
 
     - name: Commit and Push Changes
       run: |
         git add .
-        git diff-index --quiet HEAD -- || (git commit -m "Converted 300hero-cn.yaml to 300hero-cn.mrs" && git push)
+        git diff-index --quiet HEAD -- || (git commit -m "Converted all game rules to MRS format" && git push)
