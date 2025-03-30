@@ -2,7 +2,7 @@ name: Sync and Convert Game Rules to MRS
 
 on:
   schedule:
-    - cron: '0 1 * * 1'  # 每周一 01:00 UTC（北京时间 09:00）
+    - cron: '0 1 * * 1'  # Every Monday at 01:00 UTC (09:00 Beijing time)
   workflow_dispatch:
 
 permissions:
@@ -31,7 +31,7 @@ jobs:
 
     - name: Convert Game Rules YAML to MRS one by one
       run: |
-        # YAML 文件列表
+        # List of YAML files to process
         files=("rules/Game/rules1.yaml" "rules/Game/rules2.yaml" "rules/Game/rules3.yaml")
         
         for file in "${files[@]}"; do
@@ -39,7 +39,7 @@ jobs:
           name="${filename%.yaml}"
           output="rules/Game/${name}.mrs"
 
-          # 使用mihomo转换YAML为MRS
+          # Convert the YAML to MRS using mihomo
           mihomo convert-ruleset ipcidr yaml "$file" "$output"
         done
 
