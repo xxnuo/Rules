@@ -1,72 +1,70 @@
-name: Sync and Convert SSTap Rules
+name: Sync and Convert Game Rules
 
 on:
   schedule:
-    - cron: '0 0 * * 1'
+    - cron: '0 0 * * 1'  # 每周一 00:00 UTC（北京时间 08:00）执行
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  sync_and_convert_rules:
+  game_rules:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Checkout the repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Git user
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+    - name: Set up Git user
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Create action directory
-        run: mkdir -p rules/Game/action
+    - name: Install mihomo
+      run: |
+        version=$(curl -sL https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt)
+        curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
+          gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
 
-      - name: Fetch SSTap Rules
-        run: |
-          # 克隆 SSTap-Rule 仓库的 rules 目录
-          git clone --depth=1 --filter=blob:none --sparse https://github.com/FQrabbit/SSTap-Rule.git
-          cd SSTap-Rule
-          git sparse-checkout set rules
-          cd rules
-          # 将规则文件复制到 action 目录
-          cp *.rules ../../rules/Game/action/
-          cd ../..
-          # 清理临时克隆的仓库
-          rm -rf SSTap-Rule
+    - name: Create action directory
+      run: mkdir -p rules/Game/action
 
-      - name: Convert .rules files to .yaml
-        run: |
-          cd rules/Game/action
-          for file in *.rules; do
-            filename=$(basename -- "$file" .rules)
-            awk 'BEGIN {print "payload:"} {print "  - \x27"$0"\x27"}' "$file" > "../$filename.yaml"
-          done
-          cd ../../..
+    - name: Fetch Game Rules
+      run: |
+        # 克隆 SSTap-Rule 仓库，仅拉取 rules 目录
+        git clone --depth=1 --filter=blob:none --sparse https://github.com/FQrabbit/SSTap-Rule.git tmp_repo
+        cd tmp_repo
+        git sparse-checkout set rules
+        cp -r rules/* ../rules/Game/action/
+        cd ..
+        rm -rf tmp_repo
 
-      - name: Install mihomo
-        run: |
-          version=$(curl -sL https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt)
-          curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
-            gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
+    - name: Convert Rules to YAML
+      run: |
+        mkdir -p rules/Game
+        for file in rules/Game/action/*.rules; do
+          filename=$(basename -- "$file")
+          name="${filename%.rules}"
+          output="rules/Game/${name}.yaml"
 
-      - name: Convert .yaml files to .mrs
-        run: |
-          cd rules/Game
-          for file in *.yaml; do
-            filename=$(basename -- "$file" .yaml)
-            mihomo convert-ruleset ipcidr yaml "$file" "$filename.mrs"
-          done
-          cd ../../..
+          echo "payload:" > "$output"
+          grep -v '^#' "$file" | awk '{if (NF > 0) print "  - \x27"$0"\x27"}' >> "$output"
+        done
 
-      - name: Clean up action directory
-        run: rm -rf rules/Game/action
+    - name: Convert YAML to MRS
+      run: |
+        for file in rules/Game/*.yaml; do
+          name="${file%.yaml}"
+          mihomo convert-ruleset ipcidr yaml "$file" "${name}.mrs"
+        done
 
-      - name: Commit and Push Changes
-        run: |
-          git add .
-          git diff-index --quiet HEAD -- || (git commit -m "Updated SSTap rules" && git push)
+    - name: Commit and Push Changes
+      run: |
+        git add .
+        git diff-index --quiet HEAD -- || (git commit -m "Updated game rules" && git push)
+
+    - name: Clean Up Action Folder
+      run: rm -rf rules/Game/action
