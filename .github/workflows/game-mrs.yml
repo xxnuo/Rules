@@ -29,49 +29,37 @@ jobs:
         curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
           gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
 
-    - name: Create temporary directory for YAML files
+    - name: Create folder to store the YAML files
       run: |
         mkdir -p rules/Game/action2
 
-    - name: Fetch YAML files from repository
+    - name: Fetch Game Rules from repository
       run: |
-        # 获取 GitHub 上的文件列表，并下载所有 .yaml 文件
-        files=$(curl -s https://api.github.com/repos/Lanlan13-14/Rules/contents/rules/Game?ref=main | jq -r '.[].name' | grep '.yaml')
-        for file in $files; do
-          curl -sL "https://raw.githubusercontent.com/Lanlan13-14/Rules/main/rules/Game/$file" -o "rules/Game/action2/$file"
-        done
+        # 拉取所有以 .yaml 结尾的文件
+        curl -sL "https://github.com/Lanlan13-14/Rules/raw/main/rules/Game/*.yaml" -o rules/Game/action2/
 
-    - name: Process YAML Files
+    - name: Check, Convert, and Clean Up YAML files
       run: |
-        # 遍历 action2 目录下的所有 YAML 文件并处理
+        # 遍历 action2 目录下的所有 YAML 文件并逐个处理
         for file in rules/Game/action2/*.yaml; do
-          # 使用 awk 删除单引号内的前后空格
-          awk "BEGIN {FS=\"'\";
-            OFS=\"'\";
-            } {
-              for (i=2; i<=NF; i+=2) {
-                gsub(/^ +| +$/, \"\", \$i);
-              }
-              print;
-            }" "$file" > "$file.tmp" && mv "$file.tmp" "$file"
-        done
-
-    - name: Convert YAML Files to MRS
-      run: |
-        # 遍历 action2 目录下的所有 YAML 文件并转换为 MRS 格式
-        for file in rules/Game/action2/*.yaml; do
-          filename=$(basename -- "$file")
-          name="${filename%.yaml}"
-          output="rules/Game/${name}.mrs"
+          # 创建临时文件
+          temp_file="rules/Game/action2/temp_${file##*/}"
+          > "$temp_file"
           
-          # 使用 mihomo 转换每个 YAML 文件为 MRS 格式
-          mihomo convert-ruleset ipcidr yaml "$file" "$output"
-        done
+          # 逐行处理文件
+          while IFS= read -r line; do
+            # 删除单引号内的空格
+            line=$(echo "$line" | sed "s/' *[^']* *'/\1/g")
+            echo "$line" >> "$temp_file"
+          done < "$file"
+          
+          # 使用 mihomo 转换文件为 MRS 格式
+          output="rules/Game/${file##*/}"
+          mihomo convert-ruleset ipcidr yaml "$temp_file" "$output"
 
-    - name: Clean up temporary files
-      run: |
-        # 删除 action2 目录中的 YAML 文件
-        rm -rf rules/Game/action2
+          # 删除临时文件和原始 YAML 文件
+          rm -f "$temp_file" "$file"
+        done
 
     - name: Commit and Push Changes
       run: |
