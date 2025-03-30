@@ -2,7 +2,7 @@ name: Sync and Convert Game Rules to MRS
 
 on:
   schedule:
-    - cron: '0 1 * * 1'  # 每周一 01:00 UTC（北京时间 09:00）执行
+    - cron: '0 1 * * 1'  # Every Monday at 01:00 UTC (09:00 Beijing time)
   workflow_dispatch:
 
 permissions:
@@ -29,22 +29,15 @@ jobs:
         curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
           gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
 
-    - name: Clean and Prepare Game Rules
+    - name: Convert all Game Rules YAML to MRS
       run: |
-        # 遍历所有 YAML 文件并去除私有地址、注释行，并转换为 MRS 格式
+        # Iterate through all YAML files in the rules/Game directory
         for file in rules/Game/*.yaml; do
-          # 先去除私有地址（例如10.x.x.x，172.x.x.x，192.168.x.x等）
-          sed -i '/(^10|^172.(1[6-9]|2[0-9]|3[01])|^192.168|^169.254|^22[4-9]|^2[3-5][0-9])./d' "$file"
-
-          # 去除文件中的注释行（以 # 开头的行）
-          sed -i '/^#/d' "$file"
-
-          # 转换 YAML 为 MRS
           filename=$(basename -- "$file")
           name="${filename%.yaml}"
           output="rules/Game/${name}.mrs"
 
-          # 使用 mihomo 转换为 MRS 格式
+          # Convert the YAML to MRS using mihomo
           mihomo convert-ruleset ipcidr yaml "$file" "$output"
         done
 
