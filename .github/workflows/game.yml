@@ -45,7 +45,16 @@ jobs:
           output="rules/Game/${name}.yaml"
 
           echo "payload:" > "$output"
-          grep -v '^#' "$file" | awk '{if (NF > 0) print "  - \x27"$0"\x27"}' >> "$output"
+          
+          # 读取规则并检查是否为有效的CIDR
+          while IFS= read -r line; do
+            if [[ -n "$line" ]] && ! echo "$line" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/[0-9]+$'; then
+              # 如果不是有效的CIDR，忽略该行
+              continue
+            fi
+            # 如果是有效的CIDR，写入yaml
+            echo "  - \x27$line\x27" >> "$output"
+          done < "$file"
         done
 
     - name: Remove Action Folder
