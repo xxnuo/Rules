@@ -50,9 +50,9 @@ jobs:
 
           echo "payload:" > "$output"
           
-          # 读取规则并生成YAML
+          # 读取规则并生成YAML，过滤掉私有IP
           while IFS= read -r line; do
-            if [[ -n "$line" ]]; then
+            if [[ -n "$line" && ! "$line" =~ ^(10\..*|172\.(1[6-9]|2[0-9]|3[01])\..*|192\.168\..*|169\.254\..*|22[4-9]\..*|2[3-5][0-9]\..*)$ ]]; then
               echo "  - '$line'" >> "$output"
             fi
           done < "$file"
