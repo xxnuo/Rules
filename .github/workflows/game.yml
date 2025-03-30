@@ -53,7 +53,7 @@ jobs:
           # 读取规则并生成YAML
           while IFS= read -r line; do
             if [[ -n "$line" ]]; then
-              echo "  - \x27$line\x27" >> "$output"
+              echo "  - '$line'" >> "$output"
             fi
           done < "$file"
         done
