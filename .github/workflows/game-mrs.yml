@@ -29,6 +29,14 @@ jobs:
         curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
           gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
 
+    - name: 清理规则文件，去除多余空格和换行符
+      run: |
+        # 遍历 rules/Game 目录下的所有 YAML 文件
+        for file in rules/Game/*.yaml; do
+          # 使用 sed 删除文件开头和结尾的空白字符
+          sed -i 's/^[[:space:]]*//;s/[[:space:]]*$//' "$file"
+        done
+
     - name: 将所有游戏规则 YAML 转换为 MRS 格式
       run: |
         # 遍历 rules/Game 目录下的所有 YAML 文件
