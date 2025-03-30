@@ -1,0 +1,42 @@
+name: Convert Game YAML to MRS
+
+on:
+  schedule:
+    - cron: '0 15 * * 1'  # 每周一下午3:00执行
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  convert_yaml_to_mrs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set up Git user
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+
+    - name: Install mihomo
+      run: |
+        version=$(curl -sL https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt)
+        curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
+          gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
+
+    - name: Convert YAML to MRS
+      run: |
+        for file in rules/Game/*.yaml; do
+          mrs_file="${file%.yaml}.mrs"
+          mihomo convert-ruleset domain yaml "$file" "$mrs_file"
+        done
+
+    - name: Commit and Push Changes
+      run: |
+        git add .
+        git diff-index --quiet HEAD -- || (git commit -m "Converted YAML to MRS" && git push)
