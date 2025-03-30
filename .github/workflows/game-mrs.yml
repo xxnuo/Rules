@@ -35,8 +35,11 @@ jobs:
 
     - name: Fetch YAML files from repository
       run: |
-        # 拉取所有以 .yaml 结尾的文件
-        curl -sL "https://github.com/Lanlan13-14/Rules/raw/main/rules/Game/*.yaml" -o rules/Game/action2/
+        # 获取 GitHub 上的文件列表，并下载所有 .yaml 文件
+        files=$(curl -s https://api.github.com/repos/Lanlan13-14/Rules/contents/rules/Game?ref=main | jq -r '.[].name' | grep '.yaml')
+        for file in $files; do
+          curl -sL "https://raw.githubusercontent.com/Lanlan13-14/Rules/main/rules/Game/$file" -o "rules/Game/action2/$file"
+        done
 
     - name: Process YAML Files
       run: |
