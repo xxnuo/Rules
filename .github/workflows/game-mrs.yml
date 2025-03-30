@@ -29,12 +29,10 @@ jobs:
         curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
           gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
 
-    - name: Convert Game Rules YAML to MRS one by one
+    - name: Convert all Game Rules YAML to MRS
       run: |
-        # List of YAML files to process
-        files=("rules/Game/rules1.yaml" "rules/Game/rules2.yaml" "rules/Game/rules3.yaml")
-        
-        for file in "${files[@]}"; do
+        # Iterate through all YAML files in the rules/Game directory
+        for file in rules/Game/*.yaml; do
           filename=$(basename -- "$file")
           name="${filename%.yaml}"
           output="rules/Game/${name}.mrs"
