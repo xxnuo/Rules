@@ -1,8 +1,8 @@
-name: Convert Game YAML to MRS
+name: Convert YAML to MRS
 
 on:
   schedule:
-    - cron: '0 15 * * 1'  # 每周一下午3:00执行
+    - cron: '0 1 * * 1'  # 每周一 UTC 时间凌晨1:00 执行，相当于北京时间 9:00
   workflow_dispatch:
 
 permissions:
