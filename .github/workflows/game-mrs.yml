@@ -22,11 +22,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Install dependencies and mihomo
+      - name: Install jq and mihomo
         run: |
           sudo apt-get update
-          sudo apt-get install -y jq python3-pip
-          pip3 install pyyaml
+          sudo apt-get install -y jq
           # 下载并安装 mihomo
           version=$(curl -sL https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt)
           curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | gunzip -c > mihomo
@@ -40,7 +39,7 @@ jobs:
       - name: Download YAML files via GitHub API
         run: |
           cd rules/Game/action2
-          # 获取 rules/Game 目录下所有文件的 download_url，并过滤出 .yaml 文件
+          # 使用 GitHub API 获取 rules/Game 目录下所有文件的 download_url，并过滤出 .yaml 文件
           files=$(curl -s "https://api.github.com/repos/Lanlan13-14/Rules/contents/rules/Game?ref=main" | jq -r '.[].download_url' | grep '\.yaml$')
           for url in $files; do
             echo "Downloading $url"
@@ -53,33 +52,11 @@ jobs:
           # 遍历 action2 目录下的所有 YAML 文件
           for file in rules/Game/action2/*.yaml; do
             echo "Processing file: $file"
-            # 使用 Python 脚本处理文件，清除 payload 内单引号中前后空格
-            python3 - << 'EOF'
-import sys, yaml, re
-filename = sys.argv[1]
-with open(filename, 'r', encoding='utf-8') as f:
-    try:
-        data = yaml.safe_load(f)
-    except Exception as e:
-        print("Error loading YAML:", e)
-        sys.exit(1)
-# 如果存在 payload 且为列表，则处理每个条目
-if data and 'payload' in data and isinstance(data['payload'], list):
-    new_payload = []
-    for item in data['payload']:
-        if isinstance(item, str):
-            # 去除字符串左右空白后，再用正则替换"/"前后的空格（只处理单个字符串，不改变其他部分）
-            cleaned = item.strip()
-            cleaned = re.sub(r'\s*/\s*', '/', cleaned)
-            new_payload.append(cleaned)
-        else:
-            new_payload.append(item)
-    data['payload'] = new_payload
-with open(filename, 'w', encoding='utf-8') as f:
-    yaml.dump(data, f, allow_unicode=True, default_flow_style=False)
-EOF
-            "$file"
-            # 生成输出文件名，保存在 rules/Game 目录下（与 YAML 文件同名，后缀 .mrs）
+            # 去除行首 - ' 后面多余的空白
+            sed -i "s/^[[:space:]]*-[[:space:]]*'[[:space:]]*/\1/" "$file"
+            # 去除行尾空白（即关闭单引号前的空白），仅针对以单引号结尾的行
+            sed -i "s/[^[:space:]][[:space:]]*'\$/\1'/g" "$file"
+            # 生成输出文件名（与 YAML 文件同名，后缀 .mrs），输出到 rules/Game 目录下
             base=$(basename "$file" .yaml)
             output="rules/Game/${base}.mrs"
             echo "Converting $file to $output"
