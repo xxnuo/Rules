@@ -23,12 +23,6 @@ jobs:
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
 
-    - name: Install mihomo
-      run: |
-        version=$(curl -sL https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt)
-        curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
-          gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
-
     - name: Create action directory
       run: mkdir -p rules/Game/action
 
@@ -52,13 +46,6 @@ jobs:
 
           echo "payload:" > "$output"
           grep -v '^#' "$file" | awk '{if (NF > 0) print "  - \x27"$0"\x27"}' >> "$output"
-        done
-
-    - name: Convert YAML to MRS
-      run: |
-        for file in rules/Game/*.yaml; do
-          name="${file%.yaml}"
-          mihomo convert-ruleset ipcidr yaml "$file" "${name}.mrs"
         done
 
     - name: Commit and Push Changes
