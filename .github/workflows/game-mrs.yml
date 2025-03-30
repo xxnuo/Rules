@@ -25,9 +25,11 @@ jobs:
 
     - name: Install mihomo
       run: |
+        # 下载最新的 mihomo 版本
         version=$(curl -sL https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt)
-        curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
-          gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
+        curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" -o mihomo.gz
+        gunzip mihomo.gz
+        chmod +x mihomo
 
     - name: Fetch Game Rules from repository
       run: |
@@ -37,22 +39,21 @@ jobs:
         # 获取现有的 Game 规则文件
         curl -sL "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Game/*.yaml" -o rules/Game/game-rules.yaml
 
-    - name: Convert Game Rules YAML to MRS
+    - name: Process Game Rules and Convert to MRS
       run: |
-        # 遍历 rules/Game 目录下所有的 YAML 文件并转换为 MRS 格式
-        for file in rules/Game/*.yaml; do
-          filename=$(basename -- "$file")
-          name="${filename%.yaml}"
-          output="rules/Game/${name}.mrs"
-          
-          # 使用 mihomo 转换每个 YAML 文件为 MRS 格式
-          mihomo convert-ruleset ipcidr yaml "$file" "$output"
-        done
+        # 进入 rules/Game 目录
+        cd rules/Game
 
-    - name: Clean up temporary files
-      run: |
-        # 删除原始规则文件，但保留转换后的 MRS 文件
-        rm -f rules/Game/*.yaml
+        # 遍历目录下所有 YAML 文件，去除注释和空行
+        for file in *.yaml; do
+          echo "Processing file: $file"
+          
+          # 去除注释和空行，确保文件以换行符结尾
+          sed '/^#/d; /^$/d;' "$file" > temp_file && mv temp_file "$file"
+
+          # 使用 mihomo 将 YAML 文件转换为 MRS 格式
+          mihomo convert-ruleset ipcidr yaml "$file" "${file%.yaml}.mrs"
+        done
 
     - name: Commit and Push Changes
       run: |
