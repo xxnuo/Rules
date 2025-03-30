@@ -2,7 +2,7 @@ name: Sync and Convert Game Rules to MRS
 
 on:
   schedule:
-    - cron: '0 1 * * 1'  # 每周一 UTC 01:00（北京时间09:00）
+    - cron: '30 18 * * *'  # 北京时间 02:30 执行
   workflow_dispatch:
 
 permissions:
