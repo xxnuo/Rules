@@ -23,20 +23,29 @@ jobs:
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
 
-    - name: Install mihomo
+    - name: Install jq and mihomo
       run: |
+        # 安装 jq 用于处理 JSON
+        sudo apt-get update
+        sudo apt-get install -y jq
+
+        # 安装 mihomo
         version=$(curl -sL https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt)
         curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
           gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
 
-    - name: Fetch Game Rules from repository
+    - name: Fetch Game Rules from GitHub API
       run: |
-        # 确保目标目录存在
+        # 创建目标目录
         mkdir -p rules/Game/action2
 
-        # 拉取所有 YAML 文件
-        curl -sL "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Game/300hero-cn.yaml" -o rules/Game/action2/300hero-cn.yaml
-        curl -sL "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Game/another-file.yaml" -o rules/Game/action2/another-file.yaml
+        # 获取 rules/Game 目录下所有 YAML 文件的下载链接
+        files=$(curl -s "https://api.github.com/repos/Lanlan13-14/Rules/contents/rules/Game" | jq -r '.[].download_url')
+
+        # 下载所有文件
+        for file in $files; do
+          curl -sL "$file" -o "rules/Game/action2/$(basename $file)"
+        done
 
     - name: Process and Convert Each YAML File
       run: |
