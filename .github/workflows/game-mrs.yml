@@ -1,4 +1,4 @@
-name: Convert Game Rules to MRS
+name: Convert Game Rule to MRS
 
 on:
   schedule:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  game_rules_to_mrs:
+  game_rule_to_mrs:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,32 +25,24 @@ jobs:
 
     - name: Install mihomo
       run: |
-        # 下载最新的 mihomo 版本
         version=$(curl -sL https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt)
-        curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" -o mihomo.gz
-        gunzip mihomo.gz
-        chmod +x mihomo
-        mv mihomo /usr/local/bin/
+        curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
+          gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
 
     - name: Fetch Game Rule (300hero-cn.yaml)
       run: |
-        # 下载 300hero-cn.yaml 文件
+        # 确保目标目录存在
+        mkdir -p rules/Game
+
+        # 获取指定的 300hero-cn.yaml 文件
         curl -sL "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Game/300hero-cn.yaml" -o rules/Game/300hero-cn.yaml
 
-    - name: Process Game Rule (Remove comments and empty lines)
+    - name: Convert Game Rule YAML to MRS
       run: |
-        # 进入 rules/Game 目录
-        cd rules/Game
-
-        # 处理文件，去除注释和空行，确保文件以换行符结尾
-        sed '/^#/d; /^$/d;' 300hero-cn.yaml > temp_file && mv temp_file 300hero-cn.yaml
-
-    - name: Convert 300hero-cn.yaml to MRS
-      run: |
-        # 使用 mihomo 将 YAML 文件转换为 MRS 格式
-        /usr/local/bin/mihomo convert-ruleset ipcidr yaml 300hero-cn.yaml 300hero-cn.mrs
+        # 使用 mihomo 将 300hero-cn.yaml 转换为 MRS 格式
+        /usr/local/bin/mihomo convert-ruleset ipcidr yaml rules/Game/300hero-cn.yaml rules/Game/300hero-cn.mrs
 
     - name: Commit and Push Changes
       run: |
         git add .
-        git diff-index --quiet HEAD -- || (git commit -m "Converted 300hero-cn.yaml to MRS format" && git push)
+        git diff-index --quiet HEAD -- || (git commit -m "Converted 300hero-cn.yaml to 300hero-cn.mrs" && git push)
