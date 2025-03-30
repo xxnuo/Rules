@@ -1,4 +1,4 @@
-name: Convert YAML to MRS
+name: Convert Game YAML to MRS
 
 on:
   schedule:
