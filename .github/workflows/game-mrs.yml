@@ -29,36 +29,52 @@ jobs:
         curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
           gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
 
-    - name: Create folder to store the YAML files
-      run: |
-        mkdir -p rules/Game/action2
-
     - name: Fetch Game Rules from repository
       run: |
-        # 拉取所有以 .yaml 结尾的文件
-        curl -sL "https://github.com/Lanlan13-14/Rules/raw/main/rules/Game/*.yaml" -o rules/Game/action2/
+        # 确保目标目录存在
+        mkdir -p rules/Game/action2
 
-    - name: Check, Convert, and Clean Up YAML files
+        # 拉取所有 YAML 文件
+        curl -sL "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Game/300hero-cn.yaml" -o rules/Game/action2/300hero-cn.yaml
+        curl -sL "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Game/another-file.yaml" -o rules/Game/action2/another-file.yaml
+
+    - name: Process and Convert Each YAML File
       run: |
-        # 遍历 action2 目录下的所有 YAML 文件并逐个处理
+        # 遍历 action2 目录下的所有 YAML 文件并处理
         for file in rules/Game/action2/*.yaml; do
-          # 创建临时文件
-          temp_file="rules/Game/action2/temp_${file##*/}"
-          > "$temp_file"
-          
-          # 逐行处理文件
-          while IFS= read -r line; do
-            # 删除单引号内的空格
-            line=$(echo "$line" | sed "s/' *[^']* *'/\1/g")
-            echo "$line" >> "$temp_file"
-          done < "$file"
-          
-          # 使用 mihomo 转换文件为 MRS 格式
-          output="rules/Game/${file##*/}"
-          mihomo convert-ruleset ipcidr yaml "$temp_file" "$output"
+          echo "Processing file: $file"
 
-          # 删除临时文件和原始 YAML 文件
-          rm -f "$temp_file" "$file"
+          # 读取 YAML 文件内容，删除单引号内 IP 地址前后的空格
+          python3 -c "
+import yaml
+import re
+
+# 打开并加载 YAML 文件
+with open('$file', 'r') as f:
+    data = yaml.safe_load(f)
+
+# 对每个字段进行处理，去掉单引号内的多余空格
+def clean_payload(payload):
+    for i, item in enumerate(payload):
+        if isinstance(item, str) and item.startswith("'") and item.endswith("'"):
+            # 去除单引号内的空格
+            payload[i] = item.replace(' ', '')
+    return payload
+
+# 处理 payload 字段
+if 'payload' in data:
+    data['payload'] = clean_payload(data['payload'])
+
+# 将处理后的内容保存回原文件
+with open('$file', 'w') as f:
+    yaml.dump(data, f, default_flow_style=False)
+          "
+          
+          # 使用 mihomo 转换每个 YAML 文件为 MRS 格式
+          filename=$(basename -- "$file")
+          name="${filename%.yaml}"
+          output="rules/Game/${name}.mrs"
+          mihomo convert-ruleset ipcidr yaml "$file" "$output"
         done
 
     - name: Commit and Push Changes
