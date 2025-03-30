@@ -48,10 +48,10 @@ jobs:
           grep -v '^#' "$file" | awk '{if (NF > 0) print "  - \x27"$0"\x27"}' >> "$output"
         done
 
+    - name: Remove Action Folder
+      run: rm -rf rules/Game/action
+
     - name: Commit and Push Changes
       run: |
         git add .
         git diff-index --quiet HEAD -- || (git commit -m "Updated game rules" && git push)
-
-    - name: Clean Up Action Folder
-      run: rm -rf rules/Game/action
