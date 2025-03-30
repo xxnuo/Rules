@@ -35,7 +35,7 @@ mihomo使用mrs格式文件，Stash使用yaml格式文件
 
 [Sub-store直达链接](https://github.com/sub-store-org/Sub-Store)
 
-若无所需游戏规则，可以向该项目提交请求或者自己抓包获取后给我提交请求，我会一并将内容提交给该项目
+若无所需游戏规则，可以向该项目提交请求或者自己抓包获取后给我/该项目提交请求，若提交给我那么我会一并将内容提交给该项目
 [游戏规则相关内容](https://github.com/FQrabbit/SSTap-Rule)
 
 ### 标准版
