@@ -1,4 +1,4 @@
-name: Sync and Convert Game Rules to MRS
+name: Convert Game Rules to MRS
 
 on:
   schedule:
@@ -32,31 +32,25 @@ jobs:
         chmod +x mihomo
         mv mihomo /usr/local/bin/
 
-    - name: Fetch Game Rules from repository
+    - name: Fetch Game Rule (300hero-cn.yaml)
       run: |
-        # 确保目标目录存在
-        mkdir -p rules/Game
+        # 下载 300hero-cn.yaml 文件
+        curl -sL "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Game/300hero-cn.yaml" -o rules/Game/300hero-cn.yaml
 
-        # 获取现有的 Game 规则文件
-        curl -sL "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Game/*.yaml" -o rules/Game/game-rules.yaml
-
-    - name: Process Game Rules and Convert to MRS
+    - name: Process Game Rule (Remove comments and empty lines)
       run: |
         # 进入 rules/Game 目录
         cd rules/Game
 
-        # 遍历目录下所有 YAML 文件，去除注释和空行
-        for file in *.yaml; do
-          echo "Processing file: $file"
-          
-          # 去除注释和空行，确保文件以换行符结尾
-          sed '/^#/d; /^$/d;' "$file" > temp_file && mv temp_file "$file"
+        # 处理文件，去除注释和空行，确保文件以换行符结尾
+        sed '/^#/d; /^$/d;' 300hero-cn.yaml > temp_file && mv temp_file 300hero-cn.yaml
 
-          # 使用 mihomo 将 YAML 文件转换为 MRS 格式
-          /usr/local/bin/mihomo convert-ruleset ipcidr yaml "$file" "${file%.yaml}.mrs"
-        done
+    - name: Convert 300hero-cn.yaml to MRS
+      run: |
+        # 使用 mihomo 将 YAML 文件转换为 MRS 格式
+        /usr/local/bin/mihomo convert-ruleset ipcidr yaml 300hero-cn.yaml 300hero-cn.mrs
 
     - name: Commit and Push Changes
       run: |
         git add .
-        git diff-index --quiet HEAD -- || (git commit -m "Converted game rules to MRS format" && git push)
+        git diff-index --quiet HEAD -- || (git commit -m "Converted 300hero-cn.yaml to MRS format" && git push)
