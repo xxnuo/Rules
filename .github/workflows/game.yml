@@ -26,7 +26,7 @@ jobs:
     - name: Create action directory
       run: mkdir -p rules/Game/action
 
-    - name: Fetch Game Rules
+    - name: Fetch Game Rules and Remove Private CIDR & Comments
       run: |
         # 克隆 SSTap-Rule 仓库，仅拉取 rules 目录
         git clone --depth=1 --filter=blob:none --sparse https://github.com/FQrabbit/SSTap-Rule.git tmp_repo
@@ -36,10 +36,9 @@ jobs:
         cd ..
         rm -rf tmp_repo
 
-    - name: Remove Private CIDR Addresses
-      run: |
-        # 使用 sed 删除私有地址的 CIDR
+        # 删除私有地址 CIDR 和注释行
         sed -i '/(^10|^172\.(1[6-9]|2[0-9]|3[01])|^192.168|^169.254|^22[4-9]|^2[3-5][0-9]).*/d' rules/Game/action/*.rules
+        sed -i '/^#/d' rules/Game/action/*.rules  # 删除注释行
 
     - name: Convert Rules to YAML
       run: |
