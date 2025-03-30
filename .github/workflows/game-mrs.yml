@@ -29,13 +29,12 @@ jobs:
         curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
           gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
 
-    - name: Create action2 folder
-      run: |
-        mkdir -p rules/Game/action2
-
     - name: Fetch Game Rules from repository
       run: |
-        # 拉取 rules/Game 中的所有 YAML 文件并存放到 action2 文件夹中
+        # 确保目标目录存在
+        mkdir -p rules/Game/action2
+
+        # 获取现有的 Game 规则文件
         curl -sL "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Game/*.yaml" -o rules/Game/action2/game-rules.yaml
 
     - name: Process YAML Files and Convert to MRS
@@ -53,10 +52,10 @@ jobs:
           mihomo convert-ruleset ipcidr yaml "$file" "$output"
         done
 
-    - name: Clean up action2 folder
+    - name: Clean up temporary files
       run: |
-        # 删除 action2 文件夹中的所有文件
-        rm -rf rules/Game/action2/*
+        # 删除 action2 目录中的 YAML 文件
+        rm -rf rules/Game/action2
 
     - name: Commit and Push Changes
       run: |
