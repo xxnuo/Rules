@@ -45,7 +45,16 @@ jobs:
           output="rules/Game/${name}.yaml"
 
           echo "payload:" > "$output"
-          grep -v '^#' "$file" | awk '{if (NF > 0) print "  - \x27"$0"\x27"}' >> "$output"
+          # 过滤掉注释并检查 CIDR 是否有效
+          while read line; do
+            # 跳过空行和注释行
+            if [[ -n "$line" && ! "$line" =~ ^# ]]; then
+              # 验证 CIDR 是否有效
+              if ipcalc -n -c "$line" >/dev/null 2>&1; then
+                echo "  - '$line'" >> "$output"
+              fi
+            fi
+          done < "$file"
         done
 
     - name: Remove Action Folder
