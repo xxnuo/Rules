@@ -47,18 +47,12 @@ jobs:
           done
           cd -
 
-      - name: Move downloaded YAML files to main folder
-        run: |
-          # 将临时目录中的 YAML 文件移动到 rules/Game 目录中（保留原始 YAML 文件）
-          mv rules/Game/action2/*.yaml rules/Game/
-
       - name: Process and convert each YAML file
         run: |
-          # 遍历 rules/Game 目录下所有 YAML 文件（临时目录中的文件已移动）
-          for file in rules/Game/*.yaml; do
+          # 对每个 YAML 文件，先使用 Perl 清除单引号内前后多余空格，再调用 mihomo 转换
+          for file in rules/Game/action2/*.yaml; do
             echo "Processing file: $file"
-            # 使用 Perl 清除单引号内前后多余空格
-            # 例如将 "- '1.201.188.0/23 '" 转换为 "- '1.201.188.0/23'"
+            # Perl 命令：将单引号内的内容两侧多余空格去掉，保留内容
             perl -i -pe "s/'\s*([^']*?)\s*'/'\$1'/g" "$file"
             base=$(basename "$file" .yaml)
             output="rules/Game/${base}.mrs"
