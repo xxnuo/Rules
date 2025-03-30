@@ -29,24 +29,30 @@ jobs:
         curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
           gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
 
-    - name: Fetch Game Rules from repository
+    - name: Create temporary directory for YAML files
       run: |
-        # 确保目标目录存在
         mkdir -p rules/Game/action2
 
-        # 获取现有的 Game 规则文件
-        curl -sL "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Game/*.yaml" -o rules/Game/action2/game-rules.yaml
+    - name: Fetch YAML files from repository
+      run: |
+        # 拉取所有以 .yaml 结尾的文件
+        curl -sL "https://github.com/Lanlan13-14/Rules/raw/main/rules/Game/*.yaml" -o rules/Game/action2/
 
-    - name: Process YAML Files and Convert to MRS
+    - name: Process YAML Files
       run: |
         # 遍历 action2 目录下的所有 YAML 文件并处理
+        for file in rules/Game/action2/*.yaml; do
+          # 使用 sed 删除单引号内 IP 地址前后的空格
+          sed -i "s/' *[^']* *'/\1/g" "$file"
+        done
+
+    - name: Convert YAML Files to MRS
+      run: |
+        # 遍历 action2 目录下的所有 YAML 文件并转换为 MRS 格式
         for file in rules/Game/action2/*.yaml; do
           filename=$(basename -- "$file")
           name="${filename%.yaml}"
           output="rules/Game/${name}.mrs"
-          
-          # 读取 YAML 文件内容，删除 IP 地址前后的空格
-          sed -i 's/\s*[0-9]\{1,3}\.[0-9]\{1,3}\{3}\/[0-9]\{1,2\}\s*/\1/g' "$file"
           
           # 使用 mihomo 转换每个 YAML 文件为 MRS 格式
           mihomo convert-ruleset ipcidr yaml "$file" "$output"
