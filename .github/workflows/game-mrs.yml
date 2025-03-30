@@ -45,8 +45,15 @@ jobs:
       run: |
         # 遍历 action2 目录下的所有 YAML 文件并处理
         for file in rules/Game/action2/*.yaml; do
-          # 使用 sed 删除单引号内 IP 地址前后的空格
-          sed -i "s/' *[^']* *'/\1/g" "$file"
+          # 使用 awk 删除单引号内的前后空格
+          awk "BEGIN {FS=\"'\";
+            OFS=\"'\";
+            } {
+              for (i=2; i<=NF; i+=2) {
+                gsub(/^ +| +$/, \"\", \$i);
+              }
+              print;
+            }" "$file" > "$file.tmp" && mv "$file.tmp" "$file"
         done
 
     - name: Convert YAML Files to MRS
