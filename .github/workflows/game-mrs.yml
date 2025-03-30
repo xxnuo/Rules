@@ -29,15 +29,22 @@ jobs:
         curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
           gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
 
-    - name: Convert all Game Rules YAML to MRS
+    - name: Clean and Prepare Game Rules
       run: |
-        # 遍历所有 YAML 文件并转换为 MRS 格式
+        # 遍历所有 YAML 文件并去除私有地址、注释行，并转换为 MRS 格式
         for file in rules/Game/*.yaml; do
+          # 先去除私有地址（例如10.x.x.x，172.x.x.x，192.168.x.x等）
+          sed -i '/(^10|^172.(1[6-9]|2[0-9]|3[01])|^192.168|^169.254|^22[4-9]|^2[3-5][0-9])./d' "$file"
+
+          # 去除文件中的注释行（以 # 开头的行）
+          sed -i '/^#/d' "$file"
+
+          # 转换 YAML 为 MRS
           filename=$(basename -- "$file")
           name="${filename%.yaml}"
           output="rules/Game/${name}.mrs"
 
-          # 转换 YAML 为 MRS
+          # 使用 mihomo 转换为 MRS 格式
           mihomo convert-ruleset ipcidr yaml "$file" "$output"
         done
 
