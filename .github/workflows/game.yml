@@ -46,7 +46,9 @@ jobs:
         for file in rules/Game/action/*.rules; do
           filename=$(basename -- "$file")
           name="${filename%.rules}"
-          output="rules/Game/${name}.yaml"
+          # 替换空格为连字符，不使用sed
+          safe_name="${name// /-}"
+          output="rules/Game/${safe_name}.yaml"
 
           echo "payload:" > "$output"
           
