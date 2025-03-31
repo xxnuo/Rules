@@ -1,41 +1,46 @@
 name: Sync and Fetch ASN MRS Rules
 
-on: schedule: 
-      - cron: '0 18 * * *'  # 北京时间 02:00 执行 workflow_dispatch:
+on:
+  schedule:
+    - cron: '0 18 * * *'  # 北京时间 02:00 执行
+  workflow_dispatch:
 
-permissions: contents: write
+permissions:
+  contents: write
 
-jobs: fetch_asn_mrs_rules: runs-on: ubuntu-latest
+jobs:
+  fetch_asn_mrs_rules:
+    runs-on: ubuntu-latest
 
-steps:
-- name: Checkout the repository
-  uses: actions/checkout@v4
-  with:
-    token: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
 
-- name: Set up Git user
-  run: |
-    git config user.name "github-actions[bot]"
-    git config user.email "github-actions[bot]@users.noreply.github.com"
+    - name: Set up Git user
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
 
-- name: Create target directory
-  run: mkdir -p rules/IP
+    - name: Create target directory
+      run: mkdir -p rules/IP
 
-- name: Fetch ASN MRS Rules
-  run: |
-    # 克隆 meta-rules-dat 仓库，仅拉取 meta/asn 目录
-    git clone --depth=1 --filter=blob:none --sparse https://github.com/MetaCubeX/meta-rules-dat.git tmp_meta_repo
-    cd tmp_meta_repo
-    git sparse-checkout set meta/asn
-    cp meta/asn/*.mrs ../rules/IP/
-    cd ..
-    rm -rf tmp_meta_repo
+    - name: Fetch ASN MRS Rules
+      run: |
+        # 克隆 meta-rules-dat 仓库，仅拉取 meta/asn 目录
+        git clone --depth=1 --filter=blob:none --sparse https://github.com/MetaCubeX/meta-rules-dat.git tmp_meta_repo
+        cd tmp_meta_repo
+        git sparse-checkout set meta/asn
+        cp meta/asn/*.mrs ../rules/IP/
+        cd ..
+        rm -rf tmp_meta_repo
 
-- name: Pull Latest Changes from Remote
-  run: |
-    git pull origin main
+    - name: Pull Latest Changes from Remote
+      run: |
+        git pull origin main
 
-- name: Commit and Push Changes
-  run: |
-    git add .
-    git diff-index --quiet HEAD -- || (git commit -m "Updated ASN MRS rules" && git push)
+    - name: Commit and Push Changes
+      run: |
+        git add .
+        git diff-index --quiet HEAD -- || (git commit -m "Updated ASN MRS rules" && git push)
