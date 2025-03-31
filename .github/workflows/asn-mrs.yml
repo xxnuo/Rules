@@ -12,28 +12,19 @@ jobs:
   pull-files:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          ref: meta  # 确保这里是正确的分支
-          fetch-depth: 0  # 拉取完整的历史记录，而非浅克隆
-
-      - name: Set Git safe directory
-        run: |
-          git config --global --add safe.directory /home/runner/work/Rules/Rules
-
       - name: Create directory for MRS files
         run: |
           mkdir -p rules/IP
 
       - name: Download .mrs files from MetaCubeX/meta-rules-dat via GitHub API
         run: |
+          # 使用 GitHub API 获取指定目录的内容并下载 .mrs 文件
           page=1
           while true; do
             response=$(curl -s "https://api.github.com/repos/MetaCubeX/meta-rules-dat/contents/asn?ref=meta&page=$page&per_page=100")
             echo "API Response (Page $page): $response"
 
+            # 处理 API 响应并下载 .mrs 文件
             files_to_download=$(echo "$response" | jq -r '.[].download_url' | grep '\.mrs$')
             if [ -z "$files_to_download" ]; then
               echo "No more .mrs files to download."
@@ -45,14 +36,10 @@ jobs:
               curl -sL "$url" -o "rules/IP/$(basename $url)"
             done
 
+            # 如果有更多页面，继续下一页
             if echo "$response" | grep -q '"next"'; then
               page=$((page + 1))
             else
               break
             fi
           done
-
-      - name: Commit and Push Changes
-        run: |
-          git add .
-          git diff-index --quiet HEAD -- || (git commit -m "Pulled updated MRS files" && git push)
