@@ -118,7 +118,7 @@ Openclash
 
 •[MetaCubeX/meta-rules-dat](https://github.com/MetaCubeX/meta-rules-dat)
 
-•[SSTap](https://github.com/FQrabbit/SSTap-RuleSSTap)
+•[SSTap](https://github.com/FQrabbit/SSTap-Rule)
 
 
 # Tip
