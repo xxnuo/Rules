@@ -39,11 +39,20 @@ jobs:
       - name: Download YAML files via GitHub API
         run: |
           cd rules/Game/action2
-          # 使用 GitHub API 获取 rules/Game 目录下所有 YAML 文件的下载链接
-          files=$(curl -s "https://api.github.com/repos/Lanlan13-14/Rules/contents/rules/Game?ref=main" | jq -r '.[].download_url' | grep '\.yaml$')
-          for url in $files; do
-            echo "Downloading $url"
-            curl -sL "$url" -O
+          # 初始化文件列表
+          page=1
+          per_page=1000
+          while :; do
+            # 使用分页请求获取文件列表
+            files=$(curl -s "https://api.github.com/repos/Lanlan13-14/Rules/contents/rules/Game?ref=main&page=$page&per_page=$per_page" | jq -r '.[].download_url' | grep '\.yaml$')
+            if [ -z "$files" ]; then
+              break  # 没有更多文件，退出循环
+            fi
+            for url in $files; do
+              echo "Downloading $url"
+              curl -sL "$url" -O
+            done
+            ((page++))  # 增加页数，获取下一页
           done
           cd -
 
