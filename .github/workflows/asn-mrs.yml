@@ -54,26 +54,34 @@ jobs:
             response=$(curl -s -H "Accept: application/vnd.github.v3+json" \
               "https://api.github.com/repos/MetaCubeX/meta-rules-dat/contents/asn?ref=meta")
             files=$(echo "$response" | jq -r '.[].download_url' | grep '\.list$')
-            for url in $files; do
-              echo "Downloading $url"
-              curl -sL "$url" -O
+          elif [ $total_files -le 2000 ]; then
+            for page in 1 2; do
+              response=$(curl -s -H "Accept: application/vnd.github.v3+json" \
+                "https://api.github.com/repos/MetaCubeX/meta-rules-dat/contents/asn?ref=meta&page=$page&per_page=$per_page")
+              files+=$(echo "$response" | jq -r '.[].download_url' | grep '\.list$')$'\n'
+            done
+          elif [ $total_files -le 3000 ]; then
+            for page in 1 2 3; do
+              response=$(curl -s -H "Accept: application/vnd.github.v3+json" \
+                "https://api.github.com/repos/MetaCubeX/meta-rules-dat/contents/asn?ref=meta&page=$page&per_page=$per_page")
+              files+=$(echo "$response" | jq -r '.[].download_url' | grep '\.list$')$'\n'
             done
           else
             total_pages=$((($total_files + $per_page - 1) / $per_page))
             for ((page=1; page<=$total_pages; page++)); do
-              echo "Fetching page $page"
               response=$(curl -s -H "Accept: application/vnd.github.v3+json" \
                 "https://api.github.com/repos/MetaCubeX/meta-rules-dat/contents/asn?ref=meta&page=$page&per_page=$per_page")
-              files=$(echo "$response" | jq -r '.[].download_url' | grep '\.list$')
-              for url in $files; do
-                echo "Downloading $url"
-                curl -sL "$url" -O
-              done
+              files+=$(echo "$response" | jq -r '.[].download_url' | grep '\.list$')$'\n'
             done
           fi
+
+          for url in $files; do
+            echo "Downloading $url"
+            curl -sL "$url" -O
+          done
           cd -
 
-      - name: Convert .list files to .yaml
+      - name: Convert .list files to .yaml (filter out private IPs)
         run: |
           for file in rules/IP/asn/*.list; do
             [ -f "$file" ] || continue
@@ -81,7 +89,12 @@ jobs:
             output="rules/IP/${base}.yaml"
             echo "Converting $file to $output"
             echo "payload:" > "$output"
-            awk '{print "  - \x27"$0"\x27"}' "$file" >> "$output"
+
+            while IFS= read -r line; do
+              if [[ -n "$line" && ! "$line" =~ ^(10\..*|172\.(1[6-9]|2[0-9]|3[01])\..*|192\.168\..*|169\.254\..*|22[4-9]\..*|2[3-5][0-9]\..*)$ ]]; then
+                echo "  - '$line'" >> "$output"
+              fi
+            done < "$file"
           done
 
       - name: Convert .yaml files to .mrs
@@ -101,4 +114,4 @@ jobs:
       - name: Commit and Push Changes
         run: |
           git add .
-          git diff-index --quiet HEAD -- || (git commit -m "Converted ASN rules to MRS format" && git push)
+          git diff-index --quiet HEAD -- || (git commit -m "Updated ASN rules (filtered private IPs, converted to MRS)" && git push)
