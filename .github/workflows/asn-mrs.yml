@@ -1,93 +1,114 @@
-name: Sync and Fetch ASN MRS Rules
+name: Sync and Convert ASN Rules to MRS
 
 on:
   schedule:
-    - cron: '0 18 * * *'
+    - cron: '45 18 * * *'  # 北京时间 02:45 执行
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  google_rules:
+  convert:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Set up Git user
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Set up Git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-    - name: Install mihomo
-      run: |
-        version=$(curl -sL https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt)
-        curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | \
-          gunzip -c > /usr/local/bin/mihomo && chmod +x /usr/local/bin/mihomo
+      - name: Install dependencies and mihomo
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+          # 下载 mihomo
+          version=$(curl -sL https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt)
+          curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-amd64-${version}.gz" | gunzip -c > mihomo
+          chmod +x mihomo
+          sudo mv mihomo /usr/local/bin/
 
-    - name: Fetch and Merge Google Rules
-      run: |
-        mkdir -p rules/Domain
+      - name: Create temporary folders
+        run: |
+          mkdir -p rules/IP/asn
 
-        # 下载 Google 规则文件
-        curl -sL "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/google-play.list" -o rules/Domain/google-play.list
-        curl -sL "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.list" -o rules/Domain/google.list
-
-        # 合并去重
-        cat rules/Domain/google-play.list rules/Domain/google.list | grep -v '^#' | sort -u > rules/Domain/merged_google.list
-
-    - name: Convert merged Google rules to YAML (Filtering private IPs)
-      run: |
-        output="rules/Domain/google_combined.yaml"
-        echo "payload:" > "$output"
-        while IFS= read -r line; do
-          if [[ -n "$line" && ! "$line" =~ ^(10\..*|172\.(1[6-9]|2[0-9]|3[01])\..*|192\.168\..*|169\.254\..*|22[4-9]\..*|2[3-5][0-9]\..*)$ ]]; then
-            echo "  - '$line'" >> "$output"
-          fi
-        done < rules/Domain/merged_google.list
-        
-        # 删除空 YAML 文件
-        if ! grep -q '-' "$output"; then
-          rm -f "$output"
-        fi
-
-    - name: Convert Google Rules to MRS
-      run: |
-        if [ -f "rules/Domain/google_combined.yaml" ]; then
-          mihomo convert-ruleset domain yaml rules/Domain/google_combined.yaml rules/Domain/google.mrs
-        fi
-        rm -f rules/Domain/google-play.list rules/Domain/google.list rules/Domain/merged_google.list
-
-    - name: Determine total file count for pagination
-      run: |
-        total_files=$(curl -s -H "Accept: application/vnd.github.v3+json" \
-          "https://api.github.com/repos/Lanlan13-14/Rules/contents/rules/Game?ref=main" | jq '. | length')
-        echo "TOTAL_FILES=$total_files" >> $GITHUB_ENV
-
-    - name: Download YAML files via GitHub API with pagination
-      run: |
-        cd rules/Game/action2
-        total_files=$TOTAL_FILES
-        per_page=1000
-        total_pages=$((($total_files + $per_page - 1) / $per_page))
-
-        for ((page=1; page<=$total_pages; page++)); do
-          echo "Fetching page $page"
+      - name: Get total number of .list files
+        run: |
           response=$(curl -s -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/Lanlan13-14/Rules/contents/rules/Game?ref=main&page=$page&per_page=$per_page")
-          files=$(echo "$response" | jq -r '.[].download_url' | grep '\.yaml$')
+            "https://api.github.com/repos/MetaCubeX/meta-rules-dat/contents/asn?ref=meta")
+          total_files=$(echo "$response" | jq -r '[.[] | select(.name | test(".list$"))] | length')
+          echo "Total .list files: $total_files"
+          echo "TOTAL_FILES=$total_files" >> $GITHUB_ENV
+
+      - name: Download .list files via GitHub API
+        run: |
+          cd rules/IP/asn
+          total_files=$TOTAL_FILES
+          per_page=1000
+          
+          if [ $total_files -le $per_page ]; then
+            response=$(curl -s -H "Accept: application/vnd.github.v3+json" \
+              "https://api.github.com/repos/MetaCubeX/meta-rules-dat/contents/asn?ref=meta")
+            files=$(echo "$response" | jq -r '.[].download_url' | grep '\.list$')
+          else
+            total_pages=$((($total_files + $per_page - 1) / $per_page))
+            files=""
+            for ((page=1; page<=$total_pages; page++)); do
+              response=$(curl -s -H "Accept: application/vnd.github.v3+json" \
+                "https://api.github.com/repos/MetaCubeX/meta-rules-dat/contents/asn?ref=meta&page=$page&per_page=$per_page")
+              files+=$(echo "$response" | jq -r '.[].download_url' | grep '\.list$')$'\n'
+            done
+          fi
+
           for url in $files; do
             echo "Downloading $url"
             curl -sL "$url" -O
           done
-        done
-        cd -
+          cd -
 
-    - name: Commit and Push Changes
-      run: |
-        git add .
-        git diff-index --quiet HEAD -- || (git commit -m "Updated Google rules and filtered private IPs" && git push)
+      - name: Convert .list files to .yaml (filter out private IPs)
+        run: |
+          for file in rules/IP/asn/*.list; do
+            [ -f "$file" ] || continue
+            base=$(basename "$file" .list)
+            output="rules/IP/${base}.yaml"
+            echo "Converting $file to $output"
+            echo "payload:" > "$output"
+
+            valid=false
+            while IFS= read -r line; do
+              if [[ -n "$line" && ! "$line" =~ ^(10\..*|172\.(1[6-9]|2[0-9]|3[01])\..*|192\.168\..*|169\.254\..*|22[4-9]\..*|2[3-5][0-9]\..*)$ ]]; then
+                echo "  - '$line'" >> "$output"
+                valid=true
+              fi
+            done < "$file"
+
+            # 如果 YAML 文件内容为空（只包含 "payload:"），则删除该文件
+            if ! $valid; then
+              echo "Deleting empty YAML file: $output"
+              rm -f "$output"
+            fi
+          done
+
+      - name: Convert .yaml files to .mrs
+        run: |
+          for file in rules/IP/*.yaml; do
+            [ -f "$file" ] || continue
+            base=$(basename "$file" .yaml)
+            output="rules/IP/${base}.mrs"
+            echo "Converting $file to $output"
+            mihomo convert-ruleset ipcidr yaml "$file" "$output"
+          done
+
+      - name: Remove temporary asn folder
+        run: |
+          rm -rf rules/IP/asn
+
+      - name: Commit and Push Changes
+        run: |
+          git add .
+          git diff-index --quiet HEAD -- || (git commit -m "Updated ASN rules (filtered private IPs, converted to MRS)" && git push)
