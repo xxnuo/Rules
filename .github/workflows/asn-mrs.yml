@@ -1,6 +1,7 @@
 name: Sync and Fetch ASN MRS Rules
 
-on: schedule: - cron: '0 18 * * *'  # 北京时间 02:00 执行 workflow_dispatch:
+on: schedule: 
+      - cron: '0 18 * * *'  # 北京时间 02:00 执行 workflow_dispatch:
 
 permissions: contents: write
 
@@ -38,4 +39,3 @@ steps:
   run: |
     git add .
     git diff-index --quiet HEAD -- || (git commit -m "Updated ASN MRS rules" && git push)
-
