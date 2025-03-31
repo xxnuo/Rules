@@ -32,12 +32,22 @@ jobs:
     - name: Fetch ASN MRS Rules using GitHub API
       run: |
         cd rules/IP
-        # 使用 GitHub API 获取 meta/asn 目录下所有 .mrs 文件的下载链接
-        files=$(curl -s "https://api.github.com/repos/MetaCubeX/meta-rules-dat/contents/meta/asn?ref=meta" | jq -r '.[].download_url' | grep '\.mrs$')
-        for url in $files; do
-          echo "Downloading $url"
-          curl -sL "$url" -O
-        done
+
+        # 获取 meta/asn 目录下所有 .mrs 文件的信息
+        response=$(curl -s "https://api.github.com/repos/MetaCubeX/meta-rules-dat/contents/meta/asn?ref=meta")
+
+        # 确保返回的是 JSON 数组
+        if echo "$response" | jq -e 'type == "array"' >/dev/null; then
+          files=$(echo "$response" | jq -r '.[] | select(.name | endswith(".mrs")) | .download_url')
+          for url in $files; do
+            echo "Downloading $url"
+            curl -sLO "$url"
+          done
+        else
+          echo "Error: Unexpected API response format"
+          exit 1
+        fi
+
         cd -
 
     - name: List downloaded files
