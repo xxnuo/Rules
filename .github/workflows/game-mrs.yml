@@ -45,14 +45,21 @@ jobs:
           while :; do
             # 使用分页请求获取文件列表
             files=$(curl -s "https://api.github.com/repos/Lanlan13-14/Rules/contents/rules/Game?ref=main&page=$page&per_page=$per_page" | jq -r '.[].download_url' | grep '\.yaml$')
+            
+            # 如果没有文件，则退出循环
             if [ -z "$files" ]; then
-              break  # 没有更多文件，退出循环
+              echo "No more files found, exiting."
+              break
             fi
+
+            # 下载文件
             for url in $files; do
               echo "Downloading $url"
               curl -sL "$url" -O
             done
-            ((page++))  # 增加页数，获取下一页
+
+            # 增加页数，获取下一页
+            ((page++))
           done
           cd -
 
