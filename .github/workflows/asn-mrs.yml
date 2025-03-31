@@ -16,12 +16,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          ref: meta  # 检出 meta 分支，确保分支存在
+          ref: meta  # 检出 meta 分支
 
-      - name: Check for meta branch
-        run: |
-          git branch -a
-          
       - name: Set up Git user
         run: |
           git config user.name "github-actions[bot]"
@@ -31,24 +27,41 @@ jobs:
         run: |
           mkdir -p rules/IP
 
-      - name: Download .mrs files from MetaCubeX/meta-rules-dat using Git Trees API
+      - name: Download .mrs files from MetaCubeX/meta-rules-dat
         run: |
-          # 获取指定目录的内容
-          response=$(curl -s "https://api.github.com/repos/MetaCubeX/meta-rules-dat/git/trees/meta")
-          echo "API Response: $response"
+          # 页数初始化
+          page=1
+          while true; do
+            # 获取指定目录的内容
+            response=$(curl -s "https://api.github.com/repos/MetaCubeX/meta-rules-dat/contents/asn?ref=meta&page=$page&per_page=100")
+            echo "API Response (Page $page): $response"
+            
+            # 检查是否包含错误信息
+            if echo "$response" | grep -q '"message": "Not Found"'; then
+              echo "The specified directory does not exist or the ref is invalid."
+              exit 1
+            fi
 
-          # 获取树的 SHA
-          tree_sha=$(echo "$response" | grep -o '"sha": "[^"]*' | head -n 1 | grep -o '[^"]*$')
-          echo "Tree SHA: $tree_sha"
+            # 处理 API 响应并下载 .mrs 文件
+            # 获取文件的 download_url
+            files_to_download=$(echo "$response" | grep -o '"download_url": *"[^"]*' | grep -o '[^"]*$' | grep '\.mrs$')
+            if [ -z "$files_to_download" ]; then
+              echo "No more .mrs files to download."
+              break
+            fi
 
-          # 获取树中的文件
-          response=$(curl -s "https://api.github.com/repos/MetaCubeX/meta-rules-dat/git/trees/${tree_sha}?recursive=1")
-          echo "API Response: $response"
+            # 下载文件
+            for url in $files_to_download; do
+              echo "Downloading $url"
+              curl -sL "$url" -o "rules/IP/$(basename $url)"
+            done
 
-          # 处理 API 响应并下载 .mrs 文件
-          for url in $(echo "$response" | grep -o '"download_url": *"[^"]*' | grep -o '[^"]*$' | grep '\.mrs$'); do
-            echo "Downloading $url"
-            curl -sL "$url" -o "rules/IP/$(basename $url)"
+            # 如果有更多页面，继续下一页
+            if echo "$response" | grep -q '"next"'; then
+              page=$((page + 1))
+            else
+              break
+            fi
           done
 
       - name: Commit and Push Changes
