@@ -12,45 +12,25 @@ jobs:
   pull-files:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          ref: meta  # 检出 meta 分支
-
-      - name: Set up Git user
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
       - name: Create directory for MRS files
         run: |
           mkdir -p rules/IP
 
-      - name: Download .mrs files from MetaCubeX/meta-rules-dat
+      - name: Download .mrs files from MetaCubeX/meta-rules-dat via GitHub API
         run: |
-          # 页数初始化
+          # 使用 GitHub API 获取指定目录的内容并下载 .mrs 文件
           page=1
           while true; do
-            # 获取指定目录的内容
             response=$(curl -s "https://api.github.com/repos/MetaCubeX/meta-rules-dat/contents/asn?ref=meta&page=$page&per_page=100")
             echo "API Response (Page $page): $response"
-            
-            # 检查是否包含错误信息
-            if echo "$response" | grep -q '"message": "Not Found"'; then
-              echo "The specified directory does not exist or the ref is invalid."
-              exit 1
-            fi
 
             # 处理 API 响应并下载 .mrs 文件
-            # 获取文件的 download_url
-            files_to_download=$(echo "$response" | grep -o '"download_url": *"[^"]*' | grep -o '[^"]*$' | grep '\.mrs$')
+            files_to_download=$(echo "$response" | jq -r '.[].download_url' | grep '\.mrs$')
             if [ -z "$files_to_download" ]; then
               echo "No more .mrs files to download."
               break
             fi
 
-            # 下载文件
             for url in $files_to_download; do
               echo "Downloading $url"
               curl -sL "$url" -o "rules/IP/$(basename $url)"
