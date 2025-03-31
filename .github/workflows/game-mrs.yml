@@ -44,20 +44,18 @@ jobs:
           per_page=1000
           while :; do
             # 使用分页请求获取文件列表
-            files=$(curl -s "https://api.github.com/repos/Lanlan13-14/Rules/contents/rules/Game?ref=main&page=$page&per_page=$per_page" | jq -r '.[].download_url' | grep '\.yaml$')
-            
-            # 如果没有文件，则退出循环
+            response=$(curl -s "https://api.github.com/repos/Lanlan13-14/Rules/contents/rules/Game?ref=main&page=$page&per_page=$per_page")
+            # 检查响应是否为空数组
+            files=$(echo "$response" | jq -r '.[].download_url' | grep '\.yaml$')
             if [ -z "$files" ]; then
-              echo "No more files found, exiting."
-              break
+              echo "No more YAML files to download."
+              break  # 没有更多文件，退出循环
             fi
-
             # 下载文件
             for url in $files; do
               echo "Downloading $url"
               curl -sL "$url" -O
             done
-
             # 增加页数，获取下一页
             ((page++))
           done
