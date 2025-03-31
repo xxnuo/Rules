@@ -15,30 +15,37 @@ jobs:
     steps:
     - name: Checkout the repository
       uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up Git user
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
 
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y jq wget
+
     - name: Create target directory
       run: mkdir -p rules/IP
 
-    - name: Fetch ASN MRS Rules
+    - name: Fetch ASN MRS Rules using GitHub API
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        # 克隆 meta-rules-dat 仓库，仅拉取 meta/asn 目录
-        git clone --depth=1 --filter=blob:none --sparse https://github.com/MetaCubeX/meta-rules-dat.git tmp_meta_repo
-        cd tmp_meta_repo
-        git sparse-checkout set meta/asn
-        cp meta/asn/*.mrs ../rules/IP/
-        cd ..
-        rm -rf tmp_meta_repo
+        REPO_OWNER="MetaCubeX"
+        REPO_NAME="meta-rules-dat"
+        DIRECTORY_PATH="meta/asn"
+        TARGET_DIR="rules/IP"
 
-    - name: Pull Latest Changes from Remote
-      run: |
-        git pull origin main
+        # 获取目录内容的 JSON 列表
+        response=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+          "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/contents/$DIRECTORY_PATH")
+
+        # 解析 JSON 并下载 .mrs 文件
+        echo "$response" | jq -r '.[] | select(.name | endswith(".mrs")) | .download_url' | while read -r url; do
+          wget -q -P "$TARGET_DIR" "$url"
+        done
 
     - name: Commit and Push Changes
       run: |
