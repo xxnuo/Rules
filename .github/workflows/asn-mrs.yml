@@ -34,7 +34,7 @@ jobs:
 
       - name: Create temporary folders
         run: |
-          mkdir -p rules/IP/asn
+          mkdir -p rules/IP/asn rules/IP/asn-yaml
 
       - name: Get total number of .list files
         run: |
@@ -75,7 +75,7 @@ jobs:
           for file in rules/IP/asn/*.list; do
             [ -f "$file" ] || continue
             base=$(basename "$file" .list)
-            output="rules/IP/${base}.yaml"
+            output="rules/IP/asn-yaml/${base}.yaml"
             echo "Converting $file to $output"
             echo "payload:" > "$output"
 
@@ -96,7 +96,7 @@ jobs:
 
       - name: Convert .yaml files to .mrs
         run: |
-          for file in rules/IP/*.yaml; do
+          for file in rules/IP/asn-yaml/*.yaml; do
             [ -f "$file" ] || continue
             base=$(basename "$file" .yaml)
             output="rules/IP/${base}.mrs"
@@ -104,9 +104,13 @@ jobs:
             mihomo convert-ruleset ipcidr yaml "$file" "$output"
           done
 
-      - name: Remove temporary asn folder
+      - name: Move YAML files to rules/IP
         run: |
-          rm -rf rules/IP/asn
+          mv rules/IP/asn-yaml/*.yaml rules/IP/
+
+      - name: Remove temporary folders
+        run: |
+          rm -rf rules/IP/asn rules/IP/asn-yaml
 
       - name: Commit and Push Changes
         run: |
