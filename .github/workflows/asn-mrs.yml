@@ -1,4 +1,4 @@
-name: Pull MRS Files
+name: Sync and Fetch ASN MRS Rules
 
 on:
   schedule:
