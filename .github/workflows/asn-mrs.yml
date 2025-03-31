@@ -26,10 +26,24 @@ jobs:
         run: |
           mkdir -p rules/IP
 
+      - name: Check jq installation
+        run: |
+          jq --version || (echo "jq not found, installing..." && sudo apt-get update && sudo apt-get install -y jq)
+
       - name: Download .mrs files from MetaCubeX/meta-rules-dat
         run: |
-          # 从指定的GitHub仓库中下载以.mrs结尾的文件
-          mrs_files=$(curl -s "https://api.github.com/repos/MetaCubeX/meta-rules-dat/contents/meta/asn?ref=meta" | jq -r '.[].download_url' | grep '\.mrs$')
+          # 获取指定目录的内容
+          response=$(curl -s "https://api.github.com/repos/MetaCubeX/meta-rules-dat/contents/meta/asn?ref=meta")
+          echo "API Response: $response"
+          
+          # 使用 jq 处理响应
+          mrs_files=$(echo "$response" | jq -r '.[] | select(.name | endswith(".mrs")) | .download_url')
+          
+          if [ -z "$mrs_files" ]; then
+            echo "No .mrs files found."
+            exit 0
+          fi
+
           for url in $mrs_files; do
             echo "Downloading $url"
             curl -sL "$url" -o "rules/IP/$(basename $url)"
