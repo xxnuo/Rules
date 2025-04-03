@@ -61,5 +61,6 @@ jobs:
     - name: Commit and Push Changes  
       run: |  
         git add .  
+        git commit -m "Updated BanAd rules (qx.list -> banAd.mrs)" || true  # 如果没有变更，commit 会失败，`|| true` 避免脚本报错  
         git pull --rebase  # 先同步远程最新代码，避免 push 失败  
-        git diff-index --quiet HEAD -- || (git commit -m "Updated BanAd rules (qx.list -> banAd.mrs)" && git push)
+        git push
