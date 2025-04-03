@@ -229,8 +229,43 @@ function main(config) {
   return config;
 }
 ```
+#### 在节点内添加策略组，比如我想把香港节点里面包含香港自动，那么加入一下代码
+```
+function main(config) {
+  if (!config["proxy-groups"]) {
+    config["proxy-groups"] = [];
+  }
 
-以此类推如果你想再添加照着上方代码修改即可，添加其他策略组也是如此操作即可
+  const hongKongGroupName = "香港节点";
+  const proxyToAdd = "香港自动";
+
+  // 查找 "香港节点" 组
+  const hkGroupIndex = config["proxy-groups"].findIndex(group => group.name === hongKongGroupName);
+
+  if (hkGroupIndex !== -1) {
+    let hkGroup = config["proxy-groups"][hkGroupIndex];
+
+    // 确保是 "select" 类型
+    if (hkGroup.type === "select") {
+      // 创建一个新的对象，确保 proxies 紧跟在 type 后面
+      const updatedGroup = {};
+      Object.keys(hkGroup).forEach((key) => {
+        updatedGroup[key] = hkGroup[key];
+        if (key === "type") {
+          updatedGroup["proxies"] = [proxyToAdd];
+        }
+      });
+
+      // 替换原来的组
+      config["proxy-groups"][hkGroupIndex] = updatedGroup;
+    }
+  }
+
+  return config;
+}
+```
+
+以此类推如果你想再添加照着上方代码修改即可，添加/修改其他策略组也是如此操作即可
 #### 添加自建节点以添加ss2022节点回家为例使用如下代码，其余代理协议需要其他配置可自行参照[mihomo官方文档](https://wiki.metacubex.one)填入
 ```
 function main(config) {
