@@ -60,7 +60,7 @@ Mihomo使用➡️
 **[configfull_lite.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_lite.yaml)**
 
 Stash使用➡️
-**[configfull_Stash_lite.yaml](https://github.com/Lanlan13-14/Rules/blob/main/configfull_Stash_lite.yaml)**
+**[configfull_Stash_lite.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_Stash_lite.yaml)**
 
 ##### 无去广告版
 
