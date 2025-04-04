@@ -41,19 +41,42 @@ mihomo使用mrs格式文件，Stash使用yaml格式文件
 ### 标准版
 
 Mihomo使用➡️
-[configfull.yaml](https://github.com/Lanlan13-14/Rules/blob/main/configfull.yaml)
+**[configfull.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull.yaml)**
 
 Stash使用➡️
-[configfull_Stash.yaml](https://github.com/Lanlan13-14/Rules/blob/main/configfull_Stash.yaml)
+**[configfull_Stash.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_Stash.yaml)**
 
-### 无去广告版
+##### 无去广告版
 
 Mihomo使用➡️
-[configfull_NoAd.yaml](https://github.com/Lanlan13-14/Rules/blob/main/configfull_NoAd.yaml)
+**[configfull_NoAd.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd.yaml)**
 
-Stash使用（AppleTV建议使用）➡️
-[configfull_NoAd_stash.yaml](https://github.com/Lanlan13-14/Rules/blob/main/configfull_NoAd_Stash.yaml)
+Stash使用➡️
+**[configfull_NoAd_stash.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd_Stash.yaml)**
 
+### Lite版本
+
+Mihomo使用➡️
+**[configfull.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull.yaml)**
+
+Stash使用➡️
+**[configfull_Stash.yaml](https://github.com/Lanlan13-14/Rules/blob/main/configfull_Stash.yaml)**
+
+##### 无去广告版
+
+Mihomo使用➡️
+**[configfull_lite.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_lite.yaml)**
+
+Stash使用➡️
+**[configfull_Stash_lite.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_Stash_lite.yaml)**
+
+##### 无去广告版
+
+Mihomo使用➡️
+**[configfull_NoAd_lite.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd_lite.yaml)**
+
+Stash使用➡️
+**[configfull_NoAd_stash_lite.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd_Stash_lite.yaml)**
 
 ## 客户端推荐
 •Windows/MacOS/Linux
