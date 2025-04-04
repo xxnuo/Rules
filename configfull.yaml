@@ -12,9 +12,6 @@ proxy-providers:
   Airport_01:
     url: "订阅链接1"
     type: http
-    header:
-      User-Agent:
-      - "mihomo/1.18.3"
     interval: 86400
     health-check:
       enable: true
@@ -29,9 +26,6 @@ proxy-providers:
   Airport_02:
     url: "订阅链接2"
     type: http
-    header:
-      User-Agent:
-      - "mihomo/1.18.3"
     interval: 86400
     health-check:
       enable: true
@@ -46,9 +40,6 @@ proxy-providers:
   Airport_03:
     url: "订阅链接3"
     type: http
-    header:
-      User-Agent:
-      - "mihomo/1.18.3"
     interval: 86400
     health-check:
       enable: true
