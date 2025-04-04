@@ -261,6 +261,7 @@ rules:
   - RULE-SET,ai_domain,AI
   - GEOSITE,youtube,YouTube
   - GEOSITE,google,Google
+  - GEOIP,google,Google,no-resolve
   - GEOSITE,github,GitHub
   - GEOSITE,onedrive,OneDrive
   - GEOSITE,microsoft,Microsoft
