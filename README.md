@@ -68,7 +68,7 @@ Mihomo使用➡️
 **[configfull_NoAd_lite.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd_lite.yaml)**
 
 Stash使用➡️
-**[configfull_NoAd_stash_lite.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd_Stash_lite.yaml)**
+**[configfull_NoAd_Stash_lite.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd_Stash_lite.yaml)**
 
 ## 客户端推荐
 •Windows/MacOS/Linux
