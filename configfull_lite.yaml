@@ -192,7 +192,6 @@ dns:
     - "+.push.apple.com"
     - 5ddd.com
     - time1.cloud.tencent.com
-    - "rule-set:bank_cn_domain,wechat_domain,ai_cn_domain,NetEaseMusic_domain,alibaba_domain,media_cn_domain,xiaomi_domain,steam_cn_domain,pt_cn_domain,public-tracker_domain,115_domain,aliyun_domain,direct_domain,apple_cn_domain,apple_firmware_domain,iptv_domain,private_domain,cn_domain"
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
@@ -260,9 +259,9 @@ rules:
   - RULE-SET,wechat_asn,全球直连,no-resolve
   - RULE-SET,speedtest_domain,Speedtest
   - RULE-SET,proxy_domain,节点选择
-  - RULE-SET,ai!cn_domain,AI
+  - GEOSITE,category-ai-!cn,AI
   - RULE-SET,ai_domain,AI
-  - RULE-SET,openai_domain,AI
+  - GEOSITE,openai,AI
   - RULE-SET,ai_ip,AI,no-resolve
   - RULE-SET,biliintl_domain,哔哩东南亚
   - RULE-SET,bilibili_domain,哔哩哔哩
@@ -275,12 +274,12 @@ rules:
   - RULE-SET,aliyun_domain,全球直连
   - RULE-SET,github_domain,GitHub
   - RULE-SET,gitbook_domain,GitHub
-  - RULE-SET,youtube_domain,YouTube
-  - RULE-SET,google_domain,Google
+  - GEOSITE,youtube,YouTube
+  - GEOSITE,google,Google
   - RULE-SET,google_asn_cn,Google,no-resolve
   - RULE-SET,google_ip,Google,no-resolve
   - RULE-SET,onedrive_domain,OneDrive
-  - RULE-SET,microsoft_domain,Microsoft
+  - GEOSITE,microsoft,Microsoft
   - RULE-SET,telegram_domain,Telegram
   - RULE-SET,telegram_ip,Telegram,no-resolve
   - RULE-SET,iptv_domain,全球直连
@@ -296,7 +295,7 @@ rules:
   - RULE-SET,media_cn_domain,国内媒体
   - RULE-SET,apple_cn_domain,全球直连
   - RULE-SET,apple_firmware_domain,Apple
-  - RULE-SET,apple_domain,Apple
+  - GEOSITE,apple,Apple
   - RULE-SET,tiktok_domain,TikTok
   - RULE-SET,netflix_domain,NETFLIX
   - RULE-SET,netflix_ip,NETFLIX,no-resolve
@@ -311,10 +310,10 @@ rules:
   - RULE-SET,facebook_ip,Meta,no-resolve
   - RULE-SET,twitter_ip,节点选择,no-resolve
   - RULE-SET,steam_domain,STEAM
-  - RULE-SET,gfw_domain,节点选择
+  - GEOSITE,gfw,节点选择
   - RULE-SET,geolocation-!cn,节点选择
-  - RULE-SET,cn_domain,全球直连
-  - RULE-SET,cn_ip,全球直连,no-resolve
+  - GEOSITE,cn,全球直连
+  - GEOIP,cn,全球直连,no-resolve
   - MATCH,Final
 rule-anchor:
   ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
