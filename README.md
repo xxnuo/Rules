@@ -52,15 +52,15 @@ Mihomo使用➡️
 **[configfull_NoAd.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd.yaml)**
 
 Stash使用➡️
-**[configfull_NoAd_stash.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd_Stash.yaml)**
+**[configfull_NoAd_Stash.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd_Stash.yaml)**
 
 ### Lite版本
 
 Mihomo使用➡️
-**[configfull.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull.yaml)**
+**[configfull.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_lite.yaml)**
 
 Stash使用➡️
-**[configfull_Stash.yaml](https://github.com/Lanlan13-14/Rules/blob/main/configfull_Stash.yaml)**
+**[configfull_Stash.yaml](https://github.com/Lanlan13-14/Rules/blob/main/configfull_Stash_lite.yaml)**
 
 ##### 无去广告版
 
