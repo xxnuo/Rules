@@ -65,14 +65,6 @@ Stash使用➡️
 ##### 无去广告版
 
 Mihomo使用➡️
-**[configfull_lite.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_lite.yaml)**
-
-Stash使用➡️
-**[configfull_Stash_lite.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_Stash_lite.yaml)**
-
-##### 无去广告版
-
-Mihomo使用➡️
 **[configfull_NoAd_lite.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd_lite.yaml)**
 
 Stash使用➡️
