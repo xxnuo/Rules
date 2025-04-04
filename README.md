@@ -54,7 +54,7 @@ Mihomo使用➡️
 Stash使用➡️
 **[configfull_NoAd_Stash.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd_Stash.yaml)**
 
-### Lite版本
+### Lite版本［维护ing］
 
 Mihomo使用➡️
 **[configfull_lite.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_lite.yaml)**
