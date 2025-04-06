@@ -2,9 +2,11 @@
 
 > [!Caution]
 > 禁止任何形式的转载或发布至🇨🇳大陆平台
+> Any form of reprinting or posting to the 🇨🇳 mainland platform is prohibited
 
 > [!WARNING]
 > 中国大陆用户使用请遵守本国法律法规
+> Mainland China users please abide by the laws and regulations of your country.
 
 ## 免责申明/Disclaimer
 
