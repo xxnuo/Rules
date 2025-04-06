@@ -91,7 +91,9 @@ mihomo使用mrs格式文件，Stash使用yaml格式文件
 ![Pharos](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/pharos-mini.png)[Pharos](https://apps.apple.com/us/app/pharos-pro/id1456610173)
 
 •鸿蒙
-![ClashNEXT](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/clash-next-mini.png)[ClashNEXT](https://github.com/xiaobaigroup/hapapp)
+
+![ClashNEXT](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/clash-next-mini.png)
+[ClashNEXT](https://github.com/xiaobaigroup/hapapp)
 
 
 •Openwrt
