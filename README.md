@@ -73,28 +73,25 @@ mihomo使用mrs格式文件，Stash使用yaml格式文件
 ## 客户端推荐
 •Windows/MacOS/Linux
 
-[![Clash-verge-rev](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/clash-verge-rev-mini.png)Clash-verge-rev]（若出现DNS泄漏请打开严格路由）
-(https://github.com/clash-verge-rev/clash-verge-rev)
+![Clash-verge-rev](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/clash-verge-rev-mini.png)[Clash-verge-rev](https://github.com/clash-verge-rev/clash-verge-rev)（若出现DNS泄漏请打开严格路由）
 
-![Mihomo](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/mihomo-mini.png)Clash-meta-Party（若出现DNS泄漏请打开严格路由）
-(https://github.com/xishang0128/clash-meta-party)
+
+![Mihomo](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/mihomo-mini.png)[Clash-meta-Party](https://github.com/xishang0128/clash-meta-party)（若出现DNS泄漏请打开严格路由）
+
 
 •Android
 
-![Flclash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/flclash-mini.png)FlClash
-(https://github.com/chen08209/FlClash)
+![Flclash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/flclash-mini.png)[FlClash](https://github.com/chen08209/FlClash)
+
 
 •iOS
 
-![Stash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/stash-mini.png)Stash
-(https://apps.apple.com/app/stash/id1596063349?platform=iphone&l=zh-CN)
+![Stash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/stash-mini.png)[Stash](https://apps.apple.com/app/stash/id1596063349?platform=iphone&l=zh-CN)
 
-![Pharos](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/pharos-mini.png)Pharos-Pro
-(https://apps.apple.com/us/app/pharos-pro/id1456610173)
+![Pharos](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/pharos-mini.png)[Pharos](https://apps.apple.com/us/app/pharos-pro/id1456610173)
 
 •鸿蒙
-ClashNEXT
-(https://github.com/xiaobaigroup/hapapp)
+[ClashNEXT](https://github.com/xiaobaigroup/hapapp)
 
 
 •Openwrt
