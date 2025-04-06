@@ -108,11 +108,9 @@ mihomo使用mrs格式文件，Stash使用yaml格式文件
 
 •Openwrt
 
-Nikki
-(https://github.com/nikkinikki-org/OpenWrt-nikki)
+![Nikki](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/nikki-mini.png)[Nikki](https://github.com/nikkinikki-org/OpenWrt-nikki)
 
-Openclash
-(https://github.com/vernesong/OpenClash)
+![Openclash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/openclash-mini.png)[Openclash](https://github.com/vernesong/OpenClash)
 
 ## 🚫广告拦截效果/Test your ad blocking effect
 
