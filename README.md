@@ -40,7 +40,6 @@ mihomo使用mrs格式文件，Stash使用yaml格式文件
 
 ### 标准版
 
-[!Stash使用(https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/stash.png)]
 Mihomo使用➡️
 **[configfull.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull.yaml)**
 
