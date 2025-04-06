@@ -2,8 +2,7 @@
 
 > [!Caution]
 > 禁止任何形式的转载或发布至🇨🇳大陆平台
-
-> Any form of reprinting or posting to the 🇨🇳 mainland platform is prohibited
+Any form of reprinting or posting to the 🇨🇳 mainland platform is prohibited
 
 > [!WARNING]
 > 中国大陆用户使用请遵守本国法律法规
