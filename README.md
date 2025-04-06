@@ -38,7 +38,7 @@ mihomo使用mrs格式文件，Stash使用yaml格式文件
 若无所需游戏规则，可以向该项目提交请求或者自己抓包获取后给该项目提交请求
 [游戏规则相关内容](https://github.com/FQrabbit/SSTap-Rule)
 
-### 标准版
+### 标准版/Standard
 
 ![Mihomo](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/mihomo-mini.png)Mihomo使用➡️
 **[configfull.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull.yaml)**
@@ -54,23 +54,23 @@ mihomo使用mrs格式文件，Stash使用yaml格式文件
 ![Stash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/stash-mini.png)Stash使用➡️
 **[configfull_NoAd_Stash.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd_Stash.yaml)**
 
-### Lite版本（该版本高度依赖Geo数据库，请及时更新您的数据库）
+### Lite版本/Lite version（该版本高度依赖Geo数据库，请及时更新您的数据库/This version is highly dependent on the Geo database, please update your database in time）
 
-![Mihomo](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/mihomo-mini.png)Mihomo使用➡️
+![Mihomo](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/mihomo-mini.png)Mihomo使用/For Mihomo➡️
 **[configfull_lite.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_lite.yaml)**
 
-![Stash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/stash-mini.png)Stash使用➡️
+![Stash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/stash-mini.png)Stash使用/For Stash➡️
 **[configfull_Stash_lite.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_Stash_lite.yaml)**
 
-##### 无广告拦截版
+##### 无广告拦截版/No ad blocking version
 
-![Mihomo](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/mihomo-mini.png)Mihomo使用➡️
+![Mihomo](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/mihomo-mini.png)Mihomo使用/For Mihomo➡️
 **[configfull_NoAd_lite.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd_lite.yaml)**
 
-![Stash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/stash-mini.png)Stash使用➡️
+![Stash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/stash-mini.png)Stash使用/For Stash ➡️
 **[configfull_NoAd_Stash_lite.yaml](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd_Stash_lite.yaml)**
 
-## 客户端推荐
+## 客户端推荐/Client Recommendation
 •Windows/MacOS/Linux
 
 ![Clash-verge-rev](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/clash-verge-rev-mini.png)[Clash-verge-rev](https://github.com/clash-verge-rev/clash-verge-rev)（若出现DNS泄漏请打开严格路由）
@@ -90,7 +90,7 @@ mihomo使用mrs格式文件，Stash使用yaml格式文件
 
 ![Pharos](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/pharos-mini.png)[Pharos](https://apps.apple.com/us/app/pharos-pro/id1456610173)
 
-•鸿蒙
+•鸿蒙/HarmonyOS
 
 ![ClashNEXT](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/clash-next-mini.png)[ClashNEXT](https://github.com/xiaobaigroup/hapapp)
 
@@ -103,7 +103,7 @@ Nikki
 Openclash
 (https://github.com/vernesong/OpenClash)
 
-<h2 id="c">🚫 广告拦截效果</h2>
+## 🚫广告拦截效果/Test your ad blocking effect
 
 [AdBlock Tester](https://adblock-tester.com)
 
@@ -111,7 +111,7 @@ Openclash
 
 [Ad Blocker Test](https://adblock.turtlecute.org/)
 
-## 🌟鸣谢,以下排名不分先后
+## 🌟鸣谢,以下排名不分先后/Thanks, the following is in no particular order
 
 •[vernesong/OpenClash](https://github.com/vernesong/OpenClash)
 
@@ -141,4 +141,7 @@ Openclash
 这是一个简单而深刻，且不可否认的事实。如遇问题或建议欢迎指出，同时确保你的帖子包含对他人来说有用的细节和信息。通过Github社区分享你的发现。同样地分享你遇到的问题
 也感谢每一位为该项目做出贡献的开发者，是他们为该项目添砖加瓦
 请不要成为一只“吸取帮助的吸血鬼(help vampire)
-
+Life is a two-way street.
+This is a simple yet profound and undeniable fact. If you encounter any problems or have suggestions, feel free to point them out, while ensuring that your post contains useful details and information for others. Share your discoveries with the GitHub community. Likewise, share the problems you've encountered.
+We also thank every developer who has contributed to this project; it is their efforts that have helped build and improve it.
+Please do not become a 'help vampire'.
