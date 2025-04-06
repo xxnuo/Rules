@@ -152,6 +152,7 @@ Openclash
 这是一个简单而深刻，且不可否认的事实。如遇问题或建议欢迎指出，同时确保你的帖子包含对他人来说有用的细节和信息。通过Github社区分享你的发现。同样地分享你遇到的问题
 也感谢每一位为该项目做出贡献的开发者，是他们为该项目添砖加瓦
 请不要成为一只“吸取帮助的吸血鬼(help vampire)
+
 Life is a two-way street.
 This is a simple yet profound and undeniable fact. If you encounter any problems or have suggestions, feel free to point them out, while ensuring that your post contains useful details and information for others. Share your discoveries with the GitHub community. Likewise, share the problems you've encountered.
 We also thank every developer who has contributed to this project; it is their efforts that have helped build and improve it.
