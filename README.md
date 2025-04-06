@@ -79,11 +79,13 @@ mihomo使用mrs格式文件，Stash使用yaml格式文件
 ![Mihomo](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/mihomo-mini.png)Clash-meta-Party（若出现DNS泄漏请打开严格路由）
 (https://github.com/xishang0128/clash-meta-party)
 
-•Android 
+•Android
+
 ![Flclash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/flclash-mini.png)FlClash
 (https://github.com/chen08209/FlClash)
 
 •iOS
+
 ![Stash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/stash-mini.png)Stash
 (https://apps.apple.com/app/stash/id1596063349?platform=iphone&l=zh-CN)
 
