@@ -73,7 +73,7 @@ mihomo使用mrs格式文件，Stash使用yaml格式文件
 ## 客户端推荐
 •Windows/MacOS/Linux
 
-![Clash-verge-rev](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/clash-verge-rev-mini.png)Clash-verge-rev（若出现DNS泄漏请打开严格路由）
+[![Clash-verge-rev](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/clash-verge-rev-mini.png)Clash-verge-rev]（若出现DNS泄漏请打开严格路由）
 (https://github.com/clash-verge-rev/clash-verge-rev)
 
 ![Mihomo](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/mihomo-mini.png)Clash-meta-Party（若出现DNS泄漏请打开严格路由）
