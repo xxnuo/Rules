@@ -92,8 +92,7 @@ mihomo使用mrs格式文件，Stash使用yaml格式文件
 
 •鸿蒙
 
-![ClashNEXT](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/clash-next-mini.png)
-[ClashNEXT](https://github.com/xiaobaigroup/hapapp)
+![ClashNEXT](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/clash-next-mini.png)[ClashNEXT](https://github.com/xiaobaigroup/hapapp)
 
 
 •Openwrt
