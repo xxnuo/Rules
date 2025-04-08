@@ -43,7 +43,7 @@ https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull.y
 ```
 ##### Lite版填入
 ```
-https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/mihomo-mini.png)](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_lite.yaml#noCache
+https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_lite.yaml#noCache
 ```
 #### NoAd版填入
 ```
