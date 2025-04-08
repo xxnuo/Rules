@@ -103,7 +103,7 @@ $content = $content.replace(/The_house/g, 'hgc');
 <summary>展开</summary>
 
 #### 部署同上，请确保Substore版本已为最新版
-使用教程如下，注意在基础篇中所有代码于高级篇仍然适用无须额外更改，但高级篇代码并不适用于基础篇！
+###### 使用教程如下，注意在基础篇中所有代码于高级篇仍然适用无须额外更改，但高级篇代码并不适用于基础篇！
 - 1 新建文件选择mihomo覆写如图
 ![Substore高级01](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/Others/Substore%E9%AB%98%E7%BA%A701.jpg)
 - 2 新建后名称自定义一个不重复的
@@ -114,17 +114,29 @@ $content = $content.replace(/The_house/g, 'hgc');
 - 6 其余选项个人需要填写
 ## 链接部分（🔗链接一定要放在第一个脚本处）
 - 1 新建一个脚本
-标准版填入
+### 标准版填入
 ```
 https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull.yaml#noCache
 ```
-NoAd版填入
+##### Lite版填入
+```
+https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_lite.yaml#noCache
+```
+### NoAd版填入
 ```
 https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd.yaml#noCache
 ```
-Stash版填入
+##### Lite版填入
+```
+https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd_lite.yaml
+```
+### Stash版填入
 ```
 https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_Stash.yaml#noCache
+```
+##### Lite版填入
+```
+https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_Stash_lite.yaml#noCache
 ```
 - 2 新建一个脚本以替换订阅及名称所需代码与基础篇一致包括自定义过滤部分
 
