@@ -37,17 +37,29 @@ http://192.168.x.y:3001/subs?api=http://192.168.x.y:3001/CKg2absthskxudnm
 #### 3.关闭，启用下载(文件名为显示名称)
 #### 4.类型选择文件，来源选择远程
 ## 链接部分
-标准版填入
+#### 标准版填入
 ```
 https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull.yaml#noCache
 ```
-NoAd版填入
+##### Lite版填入
+```
+https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/mihomo-mini.png)](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_lite.yaml#noCache
+```
+#### NoAd版填入
 ```
 https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd.yaml#noCache
 ```
-Stash版填入
+##### Lite版填入
+```
+https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd_lite.yaml
+```
+#### Stash版填入
 ```
 https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_Stash.yaml#noCache
+```
+##### Lite版填入
+```
+https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_Stash_lite.yaml#noCache
 ```
 ## 脚本部分
 ### 机场链接自动填写
