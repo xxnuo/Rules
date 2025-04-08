@@ -90,33 +90,33 @@ mihomo使用mrs格式文件，Stash使用yaml格式文件
 ## 客户端推荐/Client Recommendation
 •Windows/MacOS/Linux
 
-![Clash-verge-rev](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/clash-verge-rev-mini.png)[Clash-verge-rev](https://github.com/clash-verge-rev/clash-verge-rev)（若出现DNS泄漏请打开严格路由）
+[![Clash-verge-rev](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/clash-verge-rev-mini.png)](https://github.com/clash-verge-rev/clash-verge-rev)[Clash-verge-rev](https://github.com/clash-verge-rev/clash-verge-rev)（若出现DNS泄漏请打开严格路由）
 
 
-![Mihomo](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/mihomo-mini.png)[Clash-meta-Party](https://github.com/xishang0128/clash-meta-party)（若出现DNS泄漏请打开严格路由）
+[![Mihomo](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/mihomo-mini.png)](https://github.com/xishang0128/clash-meta-party)[Clash-meta-Party](https://github.com/xishang0128/clash-meta-party)（若出现DNS泄漏请打开严格路由）
 
 
 •Android
 
-![Flclash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/flclash-mini.png)[FlClash](https://github.com/chen08209/FlClash)
+[![Flclash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/flclash-mini.png)](https://github.com/chen08209/FlClash)[FlClash](https://github.com/chen08209/FlClash)
 
 
 •iOS
 
-![Stash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/stash-mini.png)[Stash](https://apps.apple.com/app/stash/id1596063349?platform=iphone&l=zh-CN)
+[![Stash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/stash-mini.png)](https://apps.apple.com/app/stash/id1596063349?platform=iphone&l=zh-CN)[Stash](https://apps.apple.com/app/stash/id1596063349?platform=iphone&l=zh-CN)
 
-![Pharos](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/pharos-mini.png)[Pharos](https://apps.apple.com/us/app/pharos-pro/id1456610173)
+[![Pharos](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/pharos-mini.png)](https://apps.apple.com/us/app/pharos-pro/id1456610173)[Pharos](https://apps.apple.com/us/app/pharos-pro/id1456610173)
 
 •鸿蒙/HarmonyOS
 
-![ClashNEXT](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/clash-next-mini.png)[ClashNEXT](https://github.com/xiaobaigroup/hapapp)
+[![ClashNEXT](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/clash-next-mini.png)](https://github.com/xiaobaigroup/hapapp)[ClashNEXT](https://github.com/xiaobaigroup/hapapp)
 
 
 •Openwrt
 
-![Nikki](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/nikki-mini.png)[Nikki](https://github.com/nikkinikki-org/OpenWrt-nikki)
+[![Nikki](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/nikki-mini.png)](https://github.com/nikkinikki-org/OpenWrt-nikki)[Nikki](https://github.com/nikkinikki-org/OpenWrt-nikki)
 
-![Openclash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/openclash-mini.png)[Openclash](https://github.com/vernesong/OpenClash)
+[![Openclash](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/openclash-mini.png)](https://github.com/vernesong/OpenClash)[Openclash](https://github.com/vernesong/OpenClash)
 
 ## 🚫广告拦截效果/Test your ad blocking effect
 
