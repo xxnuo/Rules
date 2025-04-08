@@ -37,7 +37,7 @@ http://192.168.x.y:3001/subs?api=http://192.168.x.y:3001/CKg2absthskxudnm
 #### 3.关闭，启用下载(文件名为显示名称)
 #### 4.类型选择文件，来源选择远程
 ## 链接部分
-#### 标准版填入
+### 标准版填入
 ```
 https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull.yaml#noCache
 ```
@@ -45,7 +45,7 @@ https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull.y
 ```
 https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_lite.yaml#noCache
 ```
-#### NoAd版填入
+### NoAd版填入
 ```
 https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd.yaml#noCache
 ```
@@ -53,7 +53,7 @@ https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_N
 ```
 https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_NoAd_lite.yaml
 ```
-#### Stash版填入
+### Stash版填入
 ```
 https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/configfull_Stash.yaml#noCache
 ```
