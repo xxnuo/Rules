@@ -1,6 +1,6 @@
 # 以下为Substore部署教程
 
-<h2 id="b">基础版</h2>
+<h2 id="b">基础篇</h2>
 <details>
 <summary>展开</summary>
 
@@ -103,7 +103,7 @@ $content = $content.replace(/The_house/g, 'hgc');
 <summary>展开</summary>
 
 #### 部署同上，请确保Substore版本已为最新版
-使用教程如下
+使用教程如下，注意在基础篇中所有代码于高级篇仍然适用无须额外更改，但高级篇代码并不适用于基础篇！
 - 1 新建文件选择mihomo覆写如图
 ![Substore高级01](https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/Others/Substore%E9%AB%98%E7%BA%A701.jpg)
 - 2 新建后名称自定义一个不重复的
