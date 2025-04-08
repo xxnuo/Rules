@@ -41,9 +41,9 @@ mihomo使用mrs格式文件，Stash使用yaml格式文件
 - 本项目的订阅转换模板/yaml文件是参考 ACL4SSR，Aethersailor等规则修改而来，基于作者个人理解做出的修改，另外我的更新不固定建议每2-3周下载一次配置文件替换，以获得最佳体验/也可配合Substore一同使用达到如同使用订阅链接的效果(每次更新订阅即会自动拉取配置文件更新，无需手动下载上传)，同时感谢各位的大力支持
 
 #### Substore部署使用教程，高级玩法请将Substore更新至最新版本，注意更新前请先备份以防止配置丢失
-[Sub-store结合教程](https://github.com/Lanlan13-14/Rules/blob/main/Others/Substore.md)
+[![Sub-store结合教程](https://github.com/Lanlan13-14/Rules/blob/main/Others/Substore.md)](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/sub-store-mini.png)
 
-[Sub-store直达链接](https://github.com/sub-store-org/Sub-Store)
+[![Sub-store直达链接](https://github.com/sub-store-org/Sub-Store)](https://raw.githubusercontent.com/Lanlan13-14/Icon-for-webui/refs/heads/main/sub-store-mini.png)
 
 若无所需游戏规则，可以向该项目提交请求或者自己抓包获取后给该项目提交请求
 [游戏规则相关内容](https://github.com/FQrabbit/SSTap-Rule)
