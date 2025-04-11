@@ -274,6 +274,7 @@ rules:
   - GEOSITE,bahamut,巴哈姆特
   - GEOSITE,tiktok,TikTok
   - GEOSITE,bilibili,哔哩哔哩
+  - GEOIP,bilibili,哔哩哔哩,no-resolve
   - GEOSITE,biliintl,哔哩东南亚
   - GEOSITE,category-media-cn,国内媒体
   - GEOSITE,steam,STEAM
