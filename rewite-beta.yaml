@@ -1,51 +1,5 @@
 # 全局指纹
 global-client-fingerprint: qq
-# 用于下载订阅时指定UA
-global-ua: clash.meta
-
-# 策略组选择和fakeip缓存
-profile:
-  store-selected: true
-  store-fake-ip: false
-
-# 流量嗅探
-sniffer:
-  enable: true
-  sniff:
-    HTTP:
-      ports: [80, 8080-8880]
-      override-destination: true
-    TLS:
-      ports: [443, 8443]
-    QUIC:
-      ports: [443, 8443]
-  force-domain:
-    - "*.v2ex.com"
-  skip-domain:
-    - "Mijia Cloud"
-    - "dlg.io.mi.com"
-    - "*.push.apple.com"
-    - "*.apple.com"
-    - "*.wechat.com"
-    - "*.qpic.cn"
-    - "*.qq.com"
-    - "*.wechatapp.com"
-    - "*.vivox.com"
-    # 向日葵服务
-    - "*.oray.com"
-    - "*.sunlogin.net"
-
-# 代理模式
-tun:
-  enable: true
-  stack: system
-  mtu: 9000
-  dns-hijack:
-    - "any:53"
-    - "tcp://any:53"
-  auto-route: true
-  auto-redirect: true
-  auto-detect-interface: true
 
 # DNS模块
 dns:
