@@ -1,3 +1,5 @@
+# 全局指纹
+global-client-fingerprint: qq
 # 用于下载订阅时指定UA
 global-ua: clash.meta
 
