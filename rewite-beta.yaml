@@ -197,7 +197,7 @@ dns:
   nameserver:
     - quic://dns.alidns.com/dns-query
     - https://sm2.doh.pub/dns-query 
-
+proxies:
 
 
 
