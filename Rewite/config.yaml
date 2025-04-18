@@ -63,8 +63,11 @@ Include_all: &Include_all {type: select, proxies: [节点选择, 香港节点, �
 
 # 策略组
 proxy-groups:
-  - {name: 节点选择, type: select, proxies: [香港节点, 新加坡节点, 日本节点, 台湾节点, 美国节点, 欧洲节点, 全部节点, 自建/家宽节点, 故障转移], icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/select.png"}
-  - {name: PROXY, type: select, hidden: true, proxies: [节点选择]}
+  - {name: 节点选择, type: select, proxies: [香港节点, 新加坡节点, 日本节点, 台湾节点, 美国节点, 欧洲节点, 全部节点, 自建/家宽节点, 故障转移, 🟢 直连], icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/select.png"}
+  - {name: 🔗 代理, type: select, hidden: true, proxies: [节点选择]}
+  - {name: 🟢 直连, type: select, hidden: true, proxies: [DIRECT]}
+  - {name: 🚫 拒绝, type: select, hidden: true, proxies: [REJECT]}
+  - {name: ⚪ 丢弃, type: select, hidden: true, proxies: [REJECT-DROP]}
   - {name: YouTube, <<: *Proxy_first, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/youtube.png"}
   - {name: FCM, <<: *Proxy_first, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/fcm.png"}
   - {name: GoogleVPN, <<: *Proxy_first, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/googlevpn.png"}
@@ -100,8 +103,8 @@ proxy-groups:
   - {name: Wise, <<: *Proxy_first, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/wise.png"}
   - {name: 国外电商, <<: *Proxy_first, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/shopping.png"}
   - {name: STEAM,type: select, <<: *Include_all, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/steam.png"}
-  - {name: 全球直连, type: select, proxies: [DIRECT, PROXY], icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/direct.png"}
-  - {name: 隐私拦截, type: select, proxies: [REJECT, DIRECT], icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/block.png"}
+  - {name: 全球直连, type: select, proxies: [🟢 直连, 🔗 代理], icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/direct.png"}
+  - {name: 隐私拦截, type: select, proxies: [🚫 拒绝, ⚪ 丢弃 ,🟢 直连, 🔗 代理], icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/block.png"}
   - {name: Final, type: select, <<: *Include_all,  icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/final.png"}
   - {name: 自建/家宽节点, type: select, include-all: true, filter: "(?i)(自建|CF|The_house|private)", icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/private_node.png"}
   - {name: 香港节点, type: select, proxies: [香港自动, 香港均衡], include-all: true, filter: "(?i)(港|hk|hongkong|Hong Kong)", icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/Hongkong.png"}
