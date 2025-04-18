@@ -198,6 +198,10 @@ dns:
     - quic://dns.alidns.com/dns-query
     - https://sm2.doh.pub/dns-query
 
+proxies: 
+  - name: "🟢 直连"
+    type: direct
+    udp: true
 
 
 # 策略组
@@ -205,7 +209,6 @@ proxy-groups:
   - {name: 节点选择, type: select, proxies: [香港节点, 新加坡节点, 日本节点, 台湾节点, 美国节点, 欧洲节点, 全部节点, 自建/家宽节点, 故障转移], icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/select.png"}
 # 功能型代理组默认隐藏 start
   - {name: 🔗 代理, type: select, hidden: true, proxies: [节点选择]}
-  - {name: 🟢 直连, type: select, hidden: true, proxies: [DIRECT]}
   - {name: 🚫 拒绝, type: select, hidden: true, proxies: [REJECT]}
   - {name: ⚪ 丢弃, type: select, hidden: true, proxies: [REJECT-DROP]}
 # over
